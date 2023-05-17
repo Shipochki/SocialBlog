@@ -12,13 +12,13 @@
             this.Database.Migrate();
         }
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Post> Posts { get; set; } = null!;
 
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<Author> Authors { get; set; } = null!;
 
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; } = null!;
 
-        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Favorite> Favorites { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
