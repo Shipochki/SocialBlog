@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialBlog.Core;
+using SocialBlog.Core.Common;
 using SocialBlog.Core.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,8 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
+builder.Services.AddScoped<IRepository, Repository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,9 +53,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapDefaultControllerRoute();
+	endpoints.MapRazorPages();
+});
 
 app.Run();

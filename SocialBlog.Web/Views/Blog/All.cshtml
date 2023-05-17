@@ -1,0 +1,23 @@
+﻿@using SocialBlog.Core.Services.Post.Models;
+
+@model AllPostsViewModel
+
+@{
+	ViewBag.Title = $"All Posts: {Model.PostsCount}";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+@if (!Model.Posts.Any())
+{
+	<h2 class="text-center">No Post found</h2>
+}
+
+<div class="row">
+	@foreach (var post in Model.Posts)
+	{
+		<partial name="_PostPartial" model="@post" />
+	}
+</div>

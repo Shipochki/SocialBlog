@@ -1,0 +1,13 @@
+﻿@using SocialBlog.Core.Services.Post.Models;
+@model PostAllViewModel
+
+<div class="card text-bg-dark">
+  <img src="@Model.ImageUrlLink" class="card-img" alt="Post Image">
+  <div class="card-img-overlay">
+    <h5 class="card-title">@Model.Title</h5>
+    <p class="card-text">@Model.Description</p>
+    <p class="card-text"><small>Created: @Model.Created</small></p>
+    <p class="card-text"><small>@Model.Tag</small></p>
+    <p class="card-text"><small>@Model.AuthorFullName</small></p>
+  </div>
+</div>

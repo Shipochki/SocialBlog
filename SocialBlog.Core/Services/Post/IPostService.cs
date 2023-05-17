@@ -1,0 +1,9 @@
+﻿namespace SocialBlog.Core.Services.Post
+{
+    using SocialBlog.Core.Services.Post.Models;
+
+    public interface IPostService
+    {
+        Task<AllPostsViewModel> All();
+    }
+}
