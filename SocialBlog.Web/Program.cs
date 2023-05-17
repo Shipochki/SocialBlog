@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SocialBlog.Core;
 using SocialBlog.Core.Common;
 using SocialBlog.Core.Data.Entities;
+using SocialBlog.Core.Services.Post;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IPostService, PostService>();
 
 var app = builder.Build();
 

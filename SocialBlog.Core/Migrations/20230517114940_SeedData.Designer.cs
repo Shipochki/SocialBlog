@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialBlog.Core;
 
@@ -11,9 +12,10 @@ using SocialBlog.Core;
 namespace SocialBlog.Core.Migrations
 {
     [DbContext(typeof(SocialBlogDbContext))]
-    partial class SocialBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230517114940_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,21 +317,21 @@ namespace SocialBlog.Core.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
-                            Created = new DateTime(2023, 5, 17, 14, 59, 18, 817, DateTimeKind.Local).AddTicks(9878),
-                            Description = "Explore the advancements and impact of renewable energy sources such as solar, wind, hydro",
+                            Created = new DateTime(2023, 5, 17, 14, 49, 40, 39, DateTimeKind.Local).AddTicks(8219),
+                            Description = "Explore the advancements and impact of renewable energy sources such as solar, wind, hydro, and geothermal power.",
                             ImageUrlLink = "https://www.visualcapitalist.com/wp-content/uploads/2022/06/typess-of-renewable-energy.jpg",
                             IsDeleted = false,
                             Tag = "Energy",
                             Text = "Explore the advancements and impact of renewable energy sources such as solar, wind, hydro, and geothermal power. Discuss their role in combating climate change, reducing carbon emissions, and creating a sustainable future.",
                             TimeForRead = 5,
                             Title = "Renewable Energy",
-                            Updated = new DateTime(2023, 5, 17, 14, 59, 18, 817, DateTimeKind.Local).AddTicks(9919)
+                            Updated = new DateTime(2023, 5, 17, 14, 49, 40, 39, DateTimeKind.Local).AddTicks(8256)
                         },
                         new
                         {
                             Id = 2,
                             AuthorId = 1,
-                            Created = new DateTime(2023, 5, 17, 14, 59, 18, 817, DateTimeKind.Local).AddTicks(9922),
+                            Created = new DateTime(2023, 5, 17, 14, 49, 40, 39, DateTimeKind.Local).AddTicks(8259),
                             Description = "Delve into the applications of artificial intelligence (AI).",
                             ImageUrlLink = "https://online.stanford.edu/sites/default/files/styles/embedded_large/public/2020-08/artificial-intelligence-in-healthcare-MAIN.jpg?itok=uRNflQFw",
                             IsDeleted = false,
@@ -337,13 +339,13 @@ namespace SocialBlog.Core.Migrations
                             Text = "Delve into the applications of artificial intelligence (AI) in healthcare, including medical diagnosis, drug discovery, personalized medicine, and patient care. Highlight the benefits, challenges, and ethical considerations surrounding the use of AI in this critical field.",
                             TimeForRead = 2,
                             Title = "Artificial Intelligence in Healthcare",
-                            Updated = new DateTime(2023, 5, 17, 14, 59, 18, 817, DateTimeKind.Local).AddTicks(9923)
+                            Updated = new DateTime(2023, 5, 17, 14, 49, 40, 39, DateTimeKind.Local).AddTicks(8261)
                         },
                         new
                         {
                             Id = 3,
                             AuthorId = 1,
-                            Created = new DateTime(2023, 5, 17, 14, 59, 18, 817, DateTimeKind.Local).AddTicks(9926),
+                            Created = new DateTime(2023, 5, 17, 14, 49, 40, 39, DateTimeKind.Local).AddTicks(8264),
                             Description = "Examine the evolving landscape of work in the digital age.",
                             ImageUrlLink = "https://www.leadingauthorities.com/sites/default/files/2019-11/the-future-of-work.details.png",
                             IsDeleted = false,
@@ -351,7 +353,7 @@ namespace SocialBlog.Core.Migrations
                             Text = "Examine the evolving landscape of work in the digital age, considering the impact of automation, remote work, gig economy, and emerging technologies on employment patterns and job opportunities. Discuss the skills and adaptations needed for individuals and societies to thrive in the future work environment.",
                             TimeForRead = 4,
                             Title = "Future of Work",
-                            Updated = new DateTime(2023, 5, 17, 14, 59, 18, 817, DateTimeKind.Local).AddTicks(9928)
+                            Updated = new DateTime(2023, 5, 17, 14, 49, 40, 39, DateTimeKind.Local).AddTicks(8265)
                         });
                 });
 
@@ -442,7 +444,7 @@ namespace SocialBlog.Core.Migrations
                         {
                             Id = "bcb4f072-ecca-43c9-ab26-c060c6f364e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d197bc19-680e-4d67-ad99-3c98c0eae144",
+                            ConcurrencyStamp = "aa58a865-6789-4bb1-aa26-77ab8aea2ba4",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Owner",
@@ -452,9 +454,9 @@ namespace SocialBlog.Core.Migrations
                             NickName = "Admin",
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFRQdD+s93Miyl4duVr1IMMSkL8kaIr/06QiT2m96cIYYHVOIfOm3+aZ041D9Z51AA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJeAx/EtqV70+7DU5IcblLOl4fWMQn8nXCJPmGzJe7d5ND4vC5VLevsbmn1VOPCa0g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "878a4975-03a7-4d17-b78c-1bc6f3b44ec8",
+                            SecurityStamp = "6a13dcd2-9971-4a2f-a459-aa2ce2c6532e",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });

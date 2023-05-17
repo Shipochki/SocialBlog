@@ -7,7 +7,7 @@
 
     public class PostService : IPostService
     {
-        private IRepository repo;
+        private readonly IRepository repo;
 
         public PostService(IRepository _repo)
         {
@@ -25,7 +25,7 @@
                     Description = m.Description,
                     Tag = m.Tag,
                     ImageUrlLink = m.ImageUrlLink,
-                    AuthorFullName = $"{m.Author.User.FirstName} {m.Author.User.FirstName}",
+                    AuthorFullName = $"{m.Author.User.FirstName} {m.Author.User.LastName}",
                     Created = m.Created.ToString("MM/dd/yyyy"),
                     TimeForRead = m.TimeForRead,
                 })
