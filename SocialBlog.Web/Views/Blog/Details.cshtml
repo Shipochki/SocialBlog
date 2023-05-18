@@ -1,0 +1,11 @@
+﻿@using SocialBlog.Core.Services.Post.Models;
+
+@model DetailsPostViewModel
+
+<div class="card" style="width: 18rem;">
+    <img src="@Model.ImageUrlLink" class="card-img-top" alt="Post image">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Text</p>
+    </div>
+</div>

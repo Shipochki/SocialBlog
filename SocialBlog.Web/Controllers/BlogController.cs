@@ -16,9 +16,22 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            AllPostsViewModel models = await postService.All();
+            AllPostsViewModel models = await this.postService.All();
 
             return View(models);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            DetailsPostViewModel model = await this.postService.GetPostById(id);
+
+            if(model == null)
+            {
+                return BadRequest();
+            }
+
+            return View(model);
         }
     }
 }

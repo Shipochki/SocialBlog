@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using SocialBlog.Core;
 using System.Linq.Expressions;
 
-namespace SocialBlog.Core.Common
+namespace SocialBlog.Core.Data.Common
 {
     /// <summary>
     /// Implementation of repository access methods

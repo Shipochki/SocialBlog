@@ -5,5 +5,9 @@
     public interface IPostService
     {
         Task<AllPostsViewModel> All();
+
+        Task<TopThreeFavoritePostsViewModel> TopThreePosts();
+
+        Task<DetailsPostViewModel> GetPostById(int id);
     }
 }

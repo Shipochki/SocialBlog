@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialBlog.Core.Services.Post;
+using SocialBlog.Core.Services.Post.Models;
 using SocialBlog.Models;
 using System.Diagnostics;
 
@@ -6,19 +8,16 @@ namespace SocialBlog.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly IPostService postService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IPostService postService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.postService = postService;
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

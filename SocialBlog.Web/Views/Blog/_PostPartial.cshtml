@@ -13,7 +13,7 @@
         <p class="card-text"><small class="text-body-secondary">Reading time @Model.TimeForRead min.</small></p>
 		<p class="card-text"><small class="text-body-secondary">Created: @Model.Created</small></p>
 		<p class="card-text"><small class="text-body-secondary">@Model.AuthorFullName</small></p>
-		<button type="button" class="btn btn-outline-warning" font-size="20px">Read</button>
+                <a type="button" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-warning" font-size="20px">Read</a>
 		<button type="button" class="btn btn-outline-info">⭐</button>
       </div>
     </div>

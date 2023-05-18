@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace SocialBlog.Core.Common
+namespace SocialBlog.Core.Data.Common
 {
     /// <summary>
     /// Abstraction of repository access methods
