@@ -20,6 +20,8 @@
         [MaxLength(NickNameMaxLength)]
         public string NickName { get; set; } = null!;
 
+        public string? ProfileImgLink { get; set; }
+
         public bool IsDeleted { get; set; } = false;
     }
 }

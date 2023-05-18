@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialBlog.Core;
 
@@ -11,9 +12,10 @@ using SocialBlog.Core;
 namespace SocialBlog.Core.Migrations
 {
     [DbContext(typeof(SocialBlogDbContext))]
-    partial class SocialBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230518083511_AddProfilImgLinkUser")]
+    partial class AddProfilImgLinkUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,17 +1,6 @@
 ﻿@using SocialBlog.Core.Services.Post.Models;
 @model PostAllViewModel
 
-@*<div class="card text-bg-dark">
-    <img src="@Model.ImageUrlLink" class="card-img" alt="Post Image" width="500px" height="600px">
-  <div class="card-img-overlay">
-    <h5 class="card-title">@Model.Title</h5>
-    <p class="card-text">@Model.Description</p>
-    <p class="card-text"><small>Created: @Model.Created</small></p>
-    <p class="card-text"><small>@Model.Tag</small></p>
-    <p class="card-text"><small>@Model.AuthorFullName</small></p>
-  </div>
-</div>*@
-
 <div class="card mb-3" style="max-width: 1320px;">
   <div class="row g-0">
     <div class="col-md-4">
@@ -22,8 +11,10 @@
         <h5 class="card-title">@Model.Title</h5>
         <p class="card-text">@Model.Description</p>
         <p class="card-text"><small class="text-body-secondary">Reading time @Model.TimeForRead min.</small></p>
-        <p class="card-text"><small class="text-body-secondary">Created: @Model.Created</small></p>
-        <p class="card-text"><small class="text-body-secondary">@Model.AuthorFullName</small></p>
+		<p class="card-text"><small class="text-body-secondary">Created: @Model.Created</small></p>
+		<p class="card-text"><small class="text-body-secondary">@Model.AuthorFullName</small></p>
+		<button type="button" class="btn btn-outline-warning" font-size="20px">Read</button>
+		<button type="button" class="btn btn-outline-info">⭐</button>
       </div>
     </div>
   </div>
