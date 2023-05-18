@@ -9,5 +9,7 @@
         Task<TopThreeFavoritePostsViewModel> TopThreePosts();
 
         Task<DetailsPostViewModel> GetPostById(int id);
+
+        Task<int> CreatePost(CreatePostViewModel model);
     }
 }

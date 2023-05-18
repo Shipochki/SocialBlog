@@ -32,5 +32,19 @@
 
 			return author;
 		}
-	}
+
+        public async Task<int> GetAuthorIdByUserId(string userId)
+        {
+            Author author = await this.repo
+				.All<Author>()
+				.FirstOrDefaultAsync(a => a.UserId == userId);
+
+			if(author == null) 
+			{
+				throw new ArgumentException("Invalid userId or Invalid Author");
+			}
+
+			return author.Id;
+        }
+    }
 }

@@ -42,7 +42,29 @@
             return model;
         }
 
-		public async Task<DetailsPostViewModel> GetPostById(int id)
+        public async Task<int> CreatePost(CreatePostViewModel model)
+        {
+            Post post = new Post()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Text = model.Text,
+                Tag = model.Tag,
+                ImageUrlLink = model.ImageUrlLink,
+                TimeForRead = model.TimeForRead,
+                Created = DateTime.Now,
+                Updated = DateTime.Now,
+                AuthorId = model.AuthorId,
+            };
+
+            await this.repo.AddAsync<Post>(post);
+
+            await this.repo.SaveChangesAsync();
+
+            return post.Id;
+        }
+
+        public async Task<DetailsPostViewModel> GetPostById(int id)
 		{
             Post post = await this.repo.GetByIdAsync<Post>(id);
 

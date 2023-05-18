@@ -12,7 +12,7 @@
 
             public const int TextMinLength = 400;
 
-            public const int TagMinLength = 3;
+            public const int TagMinLength = 2;
             public const int TagMaxLength = 20;
 
             public const int TimeForReadMinRange = 1;

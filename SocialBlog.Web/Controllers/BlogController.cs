@@ -1,16 +1,20 @@
 ﻿namespace SocialBlog.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SocialBlog.Core.Services.Author;
     using SocialBlog.Core.Services.Post;
     using SocialBlog.Core.Services.Post.Models;
+    using static SocialBlog.Infranstructure.ClaimsPrincipalExtensions;
 
     public class BlogController : Controller
     {
         private readonly IPostService postService;
+        private readonly IAuthorService authorService;
 
-        public BlogController(IPostService _postService)
+        public BlogController(IPostService _postService, IAuthorService authorService)
         {
             this.postService = _postService;
+            this.authorService = authorService;
         }
 
         [HttpGet]
@@ -32,6 +36,21 @@
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View(new CreatePostViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreatePostViewModel model)
+        {
+            model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+            int postId = await this.postService.CreatePost(model);
+
+            return View(nameof(Details), postId);
         }
     }
 }
