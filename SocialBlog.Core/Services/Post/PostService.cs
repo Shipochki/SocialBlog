@@ -65,19 +65,44 @@
             return post.Id;
         }
 
-        public async Task<DetailsPostViewModel> GetPostById(int id)
+		public async Task<EditPostViewModel> GetEditPostById(int id)
+		{
+			Post post = await this.repo.GetByIdAsync<Post>(id);
+
+            if(post == null)
+            {
+                throw new ArgumentException($"Edit post Problem with id {id}");
+            }
+
+            EditPostViewModel model = new EditPostViewModel()
+            {
+                Id = id,
+                Title = post.Title,
+                Description = post.Description,
+                Text = post.Text,
+                Tag = post.Tag,
+                ImageUrlLink = post.ImageUrlLink,
+                TimeForRead = post.TimeForRead,
+                AuthorId = post.AuthorId,
+            };
+
+            return model;
+		}
+
+		public async Task<DetailsPostViewModel> GetDetailsPostById(int id)
 		{
             Post post = await this.repo.GetByIdAsync<Post>(id);
 
             if (post == null)
             {
-                throw new ArgumentException("Missing Details");
+                throw new ArgumentException($"Details post Problem with id {id}");
             }
 
             AuthorFullNameViewModel author = await this.authorService.GetAuthorFullNameById(post.AuthorId);
 
             DetailsPostViewModel model = new DetailsPostViewModel
             {
+                Id = post.Id,
                 Title = post.Title,
                 Text = post.Text,
                 Tag = post.Tag,
@@ -94,6 +119,21 @@
 		public Task<TopThreeFavoritePostsViewModel> TopThreePosts()
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task EditPost(EditPostViewModel model)
+		{
+			Post post = await this.repo.GetByIdAsync<Post>(model.Id);
+
+            post.Title = model.Title;
+            post.Description = model.Description;
+            post.Text = model.Text;
+            post.Tag = model.Tag;
+            post.ImageUrlLink = model.ImageUrlLink;
+            post.TimeForRead = model.TimeForRead;
+            post.Updated = DateTime.Now;
+
+            await this.repo.SaveChangesAsync();
 		}
 	}
 }

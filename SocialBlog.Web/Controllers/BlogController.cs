@@ -2,9 +2,11 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SocialBlog.Core.Data.Entities;
     using SocialBlog.Core.Services.Author;
     using SocialBlog.Core.Services.Post;
     using SocialBlog.Core.Services.Post.Models;
+    using static SocialBlog.Core.DataConstants;
     using static SocialBlog.Infranstructure.ClaimsPrincipalExtensions;
 
     public class BlogController : Controller
@@ -29,7 +31,7 @@
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            DetailsPostViewModel model = await this.postService.GetPostById(id);
+            DetailsPostViewModel model = await this.postService.GetDetailsPostById(id);
 
             if(model == null)
             {
@@ -65,5 +67,42 @@
 
             return View(nameof(Details), postId);
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id)
+        {
+            int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+            EditPostViewModel post = await this.postService.GetEditPostById(id);
+
+            if(post.AuthorId != authorId)
+            {
+				if (!this.User.IsAdmin())
+				{
+					return Unauthorized();
+				}
+			}
+
+            return View(post);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(EditPostViewModel model)
+        {
+			int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+
+            if(model.AuthorId != authorId) 
+            {
+                if (!this.User.IsAdmin())
+                {
+                    return Unauthorized();
+                }
+            }
+
+            await this.postService.EditPost(model);
+
+            return RedirectToAction(nameof(Details), new { model.Id });
+		}
     }
 }

@@ -41,7 +41,7 @@
 
 			if(author == null) 
 			{
-				throw new ArgumentException("Invalid userId or Invalid Author");
+				return -1;
 			}
 
 			return author.Id;
