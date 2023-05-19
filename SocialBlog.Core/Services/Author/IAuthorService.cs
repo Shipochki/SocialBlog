@@ -10,5 +10,6 @@ namespace SocialBlog.Core.Services.Author
 
 		Task CreateAuthor(AuthorCreateViewModel model);
 
+		Task<AllCandidateAuthorsViewModel> GetAllCandidate();
     }
 }

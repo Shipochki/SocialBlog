@@ -30,5 +30,12 @@ namespace SocialBlog.Web.Controllers
 
 			return RedirectToAction("All", "Blog");
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> AllCandidate()
+		{
+			AllCandidateAuthorsViewModel model = await this.authorService.GetAllCandidate();
+			return View(model);
+		}
 	}
 }

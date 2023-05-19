@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SocialBlog.Core\SocialBlog.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Author\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,15 @@
+﻿@using SocialBlog.Core.Services.Author.Models;
+
+@model AllCandidateAuthorsViewModel
+
+@if (!Model.Candidates.Any())
+{
+	<h2 class="text-center">No Post found</h2>
+}
+
+<div class="row">
+	@foreach (var candidate in Model.Candidates)
+	{
+		<partial name="_CandidatePartial" model="@candidate" />
+	}
+</div>

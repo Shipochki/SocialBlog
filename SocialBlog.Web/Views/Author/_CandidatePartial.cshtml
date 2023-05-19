@@ -1,0 +1,19 @@
+﻿@using SocialBlog.Core.Services.Author.Models;
+
+@model AuthorCandidateViewModel
+
+<div class="card" style="width: 18rem;">
+  <img src="@Model.ProfileImgLink" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">@Model.NickName</h5>
+    <p class="card-text">Phone Number: @Model.PhoneNumber</p>
+		<form style="display: inline-block; width: 45%; " class="input-group" asp-controller="Author"
+			  asp-area="" asp-action="Approve" asp-route-id="@Model.Id" method="post">
+			<input style="border-radius: 25px;" class="btn btn-info" type="submit" value="Approve" />
+		</form>
+		<form style="display: inline-block; width: 45%;" class="input-group" asp-controller="Author"
+			  asp-area="" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+			<input style="border-radius: 25px;" class="btn btn-danger" type="submit" value="Delete" />
+		</form>
+  </div>
+</div>

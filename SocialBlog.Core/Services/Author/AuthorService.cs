@@ -26,6 +26,26 @@
 			await this.repo.SaveChangesAsync();
 		}
 
+		public async Task<AllCandidateAuthorsViewModel> GetAllCandidate()
+		{
+			AllCandidateAuthorsViewModel model = new AllCandidateAuthorsViewModel();
+
+			List<AuthorCandidateViewModel> candidates = await this.repo.All<Author>()
+				.Where(a => a.IsActive == false)
+				.Select(a => new AuthorCandidateViewModel
+				{
+					Id = a.Id,
+					PhoneNumber = a.PhoneNumber,
+					NickName = a.User.NickName,
+					ProfileImgLink = a.User.ProfileImgLink != null ? a.User.ProfileImgLink : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+				})
+				.ToListAsync();
+
+			model.Candidates = candidates;
+
+			return model;
+		}
+
 		public async Task<AuthorFullNameViewModel> GetAuthorFullNameById(int id)
 		{
 			AuthorFullNameViewModel? author = await this.repo.All<Author>()
