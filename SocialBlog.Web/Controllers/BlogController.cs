@@ -1,5 +1,6 @@
 ﻿namespace SocialBlog.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SocialBlog.Core.Services.Author;
     using SocialBlog.Core.Services.Post;
@@ -39,15 +40,27 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        [Authorize]
+        public IActionResult Create()
         {
+            if (!this.User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
             return View(new CreatePostViewModel());
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreatePostViewModel model)
         {
-            model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
+			model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
             int postId = await this.postService.CreatePost(model);
 
             return View(nameof(Details), postId);

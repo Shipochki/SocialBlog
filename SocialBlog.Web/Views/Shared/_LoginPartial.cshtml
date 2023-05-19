@@ -1,13 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SocialBlog.Core.Data.Entities;
+@using SocialBlog.Core.Services.User;
+@using SocialBlog.Infranstructure;
+
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject IUserService user
 
 <ul style="padding-right: 18%;" class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-            <a style="color: white;" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a style="color: white;" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @await user.GetNickNameById(this.User.Id())!</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

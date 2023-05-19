@@ -22,6 +22,7 @@
         {
             List<PostAllViewModel> posts = await repo.All<Post>()
                 .Where(p => !p.IsDeleted)
+                .OrderByDescending(p => p.Created)
                 .Select(m => new PostAllViewModel
                 {
                     Id = m.Id,

@@ -78,9 +78,9 @@
 
             SeedData();
 
-			builder
-				.Entity<User>()
-				.HasData(this.Admin);
+            builder
+                .Entity<User>()
+                .HasData(this.Admin);
 
             builder
                 .Entity<Author>()
@@ -90,15 +90,15 @@
                 .Entity<Post>()
                 .HasData(this.Post1);
 
-			builder
-				.Entity<Post>()
-				.HasData(this.Post2);
+            builder
+                .Entity<Post>()
+                .HasData(this.Post2);
 
-			builder
-				.Entity<Post>()
-				.HasData(this.Post3);
+            builder
+                .Entity<Post>()
+                .HasData(this.Post3);
 
-			base.OnModelCreating(builder);
+            base.OnModelCreating(builder);
         }
 
         private void SeedData()
