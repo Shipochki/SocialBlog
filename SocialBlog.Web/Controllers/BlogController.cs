@@ -104,5 +104,42 @@
 
             return RedirectToAction(nameof(Details), new { model.Id });
 		}
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            PostDeleteViewModel model = await this.postService.GetPostDeleteViweById(id);
+			int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+
+			if (model.AuthorId != authorId)
+			{
+				if (!this.User.IsAdmin())
+				{
+					return Unauthorized();
+				}
+			}
+
+			return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(PostDeleteViewModel model)
+        {
+			int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+
+			if (model.AuthorId != authorId)
+			{
+				if (!this.User.IsAdmin())
+				{
+					return Unauthorized();
+				}
+			}
+
+            await this.postService.DeletePost(model.Id);
+
+            return View(nameof(All));
+		}
     }
 }

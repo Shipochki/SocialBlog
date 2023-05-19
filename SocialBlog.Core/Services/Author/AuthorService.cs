@@ -14,6 +14,18 @@
 			this.repo = repo;
 		}
 
+		public async Task CreateAuthor(AuthorCreateViewModel model)
+		{
+			Author author = new Author()
+			{
+				PhoneNumber = model.PhoneNumber,
+				UserId = model.UserId,
+			};
+
+			await this.repo.AddAsync(author);
+			await this.repo.SaveChangesAsync();
+		}
+
 		public async Task<AuthorFullNameViewModel> GetAuthorFullNameById(int id)
 		{
 			AuthorFullNameViewModel? author = await this.repo.All<Author>()

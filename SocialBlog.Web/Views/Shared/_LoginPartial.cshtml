@@ -1,15 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SocialBlog.Core.Data.Entities;
+@using SocialBlog.Core.Services.Author;
 @using SocialBlog.Core.Services.User;
 @using SocialBlog.Infranstructure;
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject IUserService user
+@inject IAuthorService author
 
 <ul style="padding-right: 18%;" class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+	if(await author.GetAuthorIdByUserId(this.User.Id()) == -1)
+	{
+			<li class="nav-item">
+				<a style="color: white;" class="nav-link" asp-area="" asp-controller="Author" asp-action="Create" asp-route-id="@this.User.Id()">Become Author</a>
+			</li>
+	}
 		<li class="nav-item dropdown">
 			<div>
 				<a style="color: white;" class="btn dropdown-toggle" href="#" role="button"
@@ -22,7 +30,7 @@
 					</li>
 					<li>
 						<a class="dropdown-item nav-link text-dark" asp-area=""
-					   asp-controller="Favorite" asp-action="AllFavorite">❤ Favorite</a>
+					   asp-controller="Favorite" asp-action="Favorites">❤ Favorite</a>
 					</li>
 					<li class="nav-item">
 						<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

@@ -135,5 +135,39 @@
 
             await this.repo.SaveChangesAsync();
 		}
+
+		public async Task DeletePost(int id)
+		{
+			Post post = await this.repo.GetByIdAsync<Post>(id);
+
+			if (post == null)
+			{
+				throw new ArgumentException($"Delete post problem with {id}");
+			}
+
+			post.IsDeleted = true;
+
+            await this.repo.SaveChangesAsync();
+		}
+
+		public async Task<PostDeleteViewModel> GetPostDeleteViweById(int id)
+		{
+			Post post = await this.repo.GetByIdAsync<Post>(id);
+
+            if(post == null)
+            {
+                throw new ArgumentException($"Get Post Delete View problem with {id}");
+            }
+
+            PostDeleteViewModel model = new PostDeleteViewModel()
+            {
+                Id = post.Id,
+                Title = post.Title,
+                ImageUrlLink = post.ImageUrlLink,
+                AuthorId = post.AuthorId,
+            };
+
+            return model;
+		}
 	}
 }

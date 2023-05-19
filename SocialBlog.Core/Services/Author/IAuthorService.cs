@@ -8,5 +8,7 @@ namespace SocialBlog.Core.Services.Author
 
 		Task<int> GetAuthorIdByUserId(string userId);
 
+		Task CreateAuthor(AuthorCreateViewModel model);
+
     }
 }

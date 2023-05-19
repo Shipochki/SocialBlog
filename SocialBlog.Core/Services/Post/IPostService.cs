@@ -15,5 +15,9 @@
         Task<EditPostViewModel> GetEditPostById(int id);
 
         Task EditPost(EditPostViewModel model);
+
+        Task DeletePost(int id);
+
+        Task<PostDeleteViewModel> GetPostDeleteViweById(int id);
     }
 }
