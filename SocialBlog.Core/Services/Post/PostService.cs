@@ -169,5 +169,30 @@
 
             return model;
 		}
-	}
+
+        public async Task<AllPostsViewModel> GetAllPostsByAuthorId(int authorId)
+        {
+            List<PostAllViewModel> posts = await repo.All<Post>()
+                .Where(p => !p.IsDeleted && p.AuthorId == authorId)
+                .OrderByDescending(p => p.Created)
+                .Select(m => new PostAllViewModel
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    Description = m.Description,
+                    Tag = m.Tag,
+                    ImageUrlLink = m.ImageUrlLink,
+                    AuthorFullName = $"{m.Author.User.FirstName} {m.Author.User.LastName}",
+                    Created = m.Created.ToString("MM/dd/yyyy"),
+                    TimeForRead = m.TimeForRead,
+                })
+                .ToListAsync();
+
+            AllPostsViewModel model = new AllPostsViewModel();
+            model.PostsCount = posts.Count;
+            model.Posts = posts;
+
+            return model;
+        }
+    }
 }

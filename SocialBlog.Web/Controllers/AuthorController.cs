@@ -28,7 +28,7 @@ namespace SocialBlog.Web.Controllers
 			model.UserId = this.User.Id();
 			await this.authorService.CreateAuthor(model);
 
-			return RedirectToAction("All", "Blog");
+			return View(nameof(AllCandidate));
 		}
 
 		[HttpGet]
@@ -36,6 +36,30 @@ namespace SocialBlog.Web.Controllers
 		{
 			AllCandidateAuthorsViewModel model = await this.authorService.GetAllCandidate();
 			return View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Approve(int id)
+		{
+			await this.authorService.ApproveAuthor(id);
+
+			return View(nameof(AllCandidate));
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(int id)
+		{
+			await this.authorService.DeleteAuthor(id);
+
+			return View(nameof(AllCandidate));
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Activate(int id)
+		{
+			await this.authorService.ActivevateAuthor(id);
+
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }

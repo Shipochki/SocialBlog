@@ -1,4 +1,10 @@
-﻿@using SocialBlog.Infranstructure;
+﻿@using Microsoft.AspNetCore.Identity;
+@using SocialBlog.Core.Data.Entities;
+@using SocialBlog.Core.Services.Author;
+@using SocialBlog.Infranstructure;
+
+@inject IAuthorService author;
+@inject SignInManager<User> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +32,18 @@
                         <li class="nav-item">
                             <a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="All">Blog</a>
                         </li>
-                        @if (this.User.IsAdmin())
+                        @if (this.SignInManager.IsSignedIn(this.User))
                         {
-                            <li class="nav-item">
-                                <a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="Create">Create Post</a>
-                            </li>
+                            @if (this.User.IsAdmin() || await this.author.GetAuthorIdByUserId(this.User.Id()) != -1)
+                            {
+                                <li class="nav-item">
+                                    <a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="Create">Create Post</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="AllByAuthor">My Posts</a>
+                                </li>
+                            }
+
                         }
                     </ul>
                     <partial name="_LoginPartial" />

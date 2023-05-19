@@ -19,5 +19,7 @@
         Task DeletePost(int id);
 
         Task<PostDeleteViewModel> GetPostDeleteViweById(int id);
+
+        Task<AllPostsViewModel> GetAllPostsByAuthorId(int authorId);
     }
 }

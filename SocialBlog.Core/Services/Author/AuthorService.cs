@@ -14,6 +14,33 @@
 			this.repo = repo;
 		}
 
+		public async Task ApproveAuthor(int id)
+		{
+			Author author = await this.repo.GetByIdAsync<Author>(id);
+
+			author.IsActive = true;
+
+			await this.repo.SaveChangesAsync();
+		}
+
+		public async Task DeleteAuthor(int id)
+		{
+			Author author = await this.repo.GetByIdAsync<Author>(id);
+
+			author.IsDeleted = true;
+
+			await this.repo.SaveChangesAsync();
+		}
+
+		public async Task ActivevateAuthor(int id)
+		{
+			Author author = await this.repo.GetByIdAsync<Author>(id);
+
+			author.IsDeleted = false;
+
+			await this.repo.SaveChangesAsync();
+		}
+
 		public async Task CreateAuthor(AuthorCreateViewModel model)
 		{
 			Author author = new Author()
@@ -78,5 +105,5 @@
 
 			return author.Id;
         }
-    }
+	}
 }

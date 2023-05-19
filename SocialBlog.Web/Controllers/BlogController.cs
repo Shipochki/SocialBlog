@@ -43,11 +43,14 @@
 
         [HttpGet]
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            if (!this.User.IsAdmin())
+            if (await this.authorService.GetAuthorIdByUserId(this.User.Id()) == -1)
             {
-                return Unauthorized();
+                if (!this.User.IsAdmin())
+                {
+                    return Unauthorized();
+                }
             }
 
             return View(new CreatePostViewModel());
@@ -57,12 +60,15 @@
         [Authorize]
         public async Task<IActionResult> Create(CreatePostViewModel model)
         {
-			if (!this.User.IsAdmin())
-			{
-				return Unauthorized();
-			}
+            if (await this.authorService.GetAuthorIdByUserId(this.User.Id()) == -1)
+            {
+                if (!this.User.IsAdmin())
+                {
+                    return Unauthorized();
+                }
+            }
 
-			model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+            model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
             int postId = await this.postService.CreatePost(model);
 
             return View(nameof(Details), postId);
@@ -72,16 +78,15 @@
         [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
-            int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
             EditPostViewModel post = await this.postService.GetEditPostById(id);
 
-            if(post.AuthorId != authorId)
+            if (await this.authorService.GetAuthorIdByUserId(this.User.Id()) == -1)
             {
-				if (!this.User.IsAdmin())
-				{
-					return Unauthorized();
-				}
-			}
+                if (!this.User.IsAdmin())
+                {
+                    return Unauthorized();
+                }
+            }
 
             return View(post);
         }
@@ -90,9 +95,7 @@
         [Authorize]
         public async Task<IActionResult> Edit(EditPostViewModel model)
         {
-			int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
-
-            if(model.AuthorId != authorId) 
+            if (await this.authorService.GetAuthorIdByUserId(this.User.Id()) == -1)
             {
                 if (!this.User.IsAdmin())
                 {
@@ -141,5 +144,16 @@
 
             return View(nameof(All));
 		}
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> AllByAuthor()
+        {
+            int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+
+            AllPostsViewModel model = await this.postService.GetAllPostsByAuthorId(authorId);
+
+            return View(model);
+        }
     }
 }
