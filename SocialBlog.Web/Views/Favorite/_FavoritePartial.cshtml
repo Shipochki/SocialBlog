@@ -5,8 +5,9 @@
     <img src="@Model.PostImgUrlLink" class="card-img-top" alt="...">
     <div class="card-body">
         <p class="card-text">@Model.PostTitle</p>
-        <div style="display: inline-block; padding-top: 40px; padding-right: 400px;">
-            <a style="padding: 5px 45px; border-radius: 25px;" type="button" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-outline-warning" font-size="20px">Read</a>
+        <div>
+            <a style="border-radius: 25px; display: inline-block;" type="button" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-outline-warning" font-size="10px">Read</a>
+            <a style="border-radius: 25px; display: inline-block;" type="button" action="post" asp-controller="Favorite" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" font-size="10px">Delete</a>
         </div>
     </div>
 </div>

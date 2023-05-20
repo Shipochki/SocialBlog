@@ -8,6 +8,7 @@ namespace SocialBlog.Core.Services.Favorite.Models
 {
     public class FavoriteAllViewModel
     {
+        public int Id { get; set; }
         public int PostId { get; set; }
 
         public string PostImgUrlLink { get; set; } = null!;

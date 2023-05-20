@@ -38,5 +38,13 @@ namespace SocialBlog.Web.Controllers
 
 			return RedirectToAction("All", "Blog");
 		}
+
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.favoriteService.Delete(id);
+
+            return RedirectToAction("All", "Favorite");
+        }
     }
 }

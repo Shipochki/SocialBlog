@@ -36,7 +36,13 @@
             await this.repo.SaveChangesAsync();
         }
 
-        public async Task<AllFavoriteViewModel> GetAllFavoriteByUserId(string userId)
+		public async Task Delete(int id)
+		{
+            await this.repo.DeleteAsync<Favorite>(id);
+            await this.repo.SaveChangesAsync();
+		}
+
+		public async Task<AllFavoriteViewModel> GetAllFavoriteByUserId(string userId)
         {
             AllFavoriteViewModel model = new AllFavoriteViewModel()
             {
@@ -44,6 +50,7 @@
                 .Where(f => f.UserId == userId)
                 .Select(f => new FavoriteAllViewModel()
                 {
+                    Id = f.Id,
                     PostId = f.PostId,
                     PostTitle = f.Post.Title,
                     PostImgUrlLink = f.Post.ImageUrlLink

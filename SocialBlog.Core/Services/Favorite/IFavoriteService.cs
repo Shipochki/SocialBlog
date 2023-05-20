@@ -12,5 +12,8 @@ namespace SocialBlog.Core.Services.Favorite
         Task CreateFavorite(CreateFavoriteViewModel model);
 
         Task<AllFavoriteViewModel> GetAllFavoriteByUserId(string userId);
-    }
+
+        Task Delete(int id);
+
+	}
 }
