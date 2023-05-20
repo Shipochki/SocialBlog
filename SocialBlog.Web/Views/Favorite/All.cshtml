@@ -1,0 +1,16 @@
+﻿@using SocialBlog.Core.Services.Favorite.Models;
+
+@model AllFavoriteViewModel
+
+
+@if (!Model.Favorites.Any())
+{
+	<h2 class="text-center">No Favorite found</h2>
+}
+
+<div class="row">
+	@foreach (var favorite in Model.Favorites)
+	{
+		<partial name="_FavoritePartial" model="@favorite" />
+	}
+</div>

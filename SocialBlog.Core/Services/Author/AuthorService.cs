@@ -7,7 +7,7 @@
 
 	public class AuthorService : IAuthorService
 	{
-		private IRepository repo;
+		private readonly IRepository repo;
 
 		public AuthorService(IRepository repo)
 		{

@@ -5,7 +5,7 @@
 
 	public class UserService : IUserService
 	{
-		private IRepository repo;
+		private readonly IRepository repo;
 
 		public UserService(IRepository repo)
 		{

@@ -5,6 +5,7 @@ using SocialBlog.Core;
 using SocialBlog.Core.Data.Common;
 using SocialBlog.Core.Data.Entities;
 using SocialBlog.Core.Services.Author;
+using SocialBlog.Core.Services.Favorite;
 using SocialBlog.Core.Services.Post;
 using SocialBlog.Core.Services.User;
 using SocialBlog.Web.Infrastucture;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 
 var app = builder.Build();
 
