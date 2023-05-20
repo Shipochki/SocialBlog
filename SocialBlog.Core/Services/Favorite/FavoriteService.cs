@@ -17,6 +17,14 @@
 
         public async Task CreateFavorite(CreateFavoriteViewModel model)
         {
+            if(await this.repo.All<Favorite>()
+                .FirstOrDefaultAsync(
+                f => f.UserId == model.UserId && 
+                f.PostId == model.PostId) != null)
+            {
+                return;
+            }
+
             Favorite favorite = new Favorite()
             {
                 UserId = model.UserId,

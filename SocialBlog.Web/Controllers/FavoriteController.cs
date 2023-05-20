@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using SocialBlog.Core.Services.Favorite;
 using SocialBlog.Core.Services.Favorite.Models;
@@ -16,6 +17,7 @@ namespace SocialBlog.Web.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             AllFavoriteViewModel model = await this.favoriteService.GetAllFavoriteByUserId(this.User.Id());
@@ -24,14 +26,17 @@ namespace SocialBlog.Web.Controllers
         }
 
         [Authorize]
-        public async Task Create(int postId)
+        public async Task<IActionResult> Create(int id)
         {
             CreateFavoriteViewModel model = new CreateFavoriteViewModel() 
             {
-                PostId = postId,
+                PostId = id,
                 UserId = this.User.Id()
             };
+
             await this.favoriteService.CreateFavorite(model);
-        }
+
+			return RedirectToAction("All", "Blog");
+		}
     }
 }
