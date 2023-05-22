@@ -2,13 +2,15 @@
 @using SocialBlog.Core.Data.Entities;
 @using SocialBlog.Core.Services.Author;
 @using SocialBlog.Core.Services.Post.Models;
+@using SocialBlog.Core.Services.Post;
 @using SocialBlog.Infranstructure;
 
 @model DetailsPostViewModel
 @inject IAuthorService author
+@inject IPostService post
 @inject SignInManager<User> SignInManager
 
-<div>
+<div style="display: inline-block; width: 1000px;">
 	@if (this.SignInManager.IsSignedIn(this.User))
 		@if (this.User.IsAdmin() || await this.author.GetAuthorIdByUserId(this.User.Id()) == this.Model.AuthorId)
 		{
@@ -34,5 +36,18 @@
 		<button style="display:inline-block; margin-left: 40px; border-radius: 25px; border-color: white;" type="button" class="btn btn-outline-info">❤</button>
 	</div>
 	<img style="width: 800px; margin: 35px 0px 35px 0px" src="@Model.ImageUrlLink" />
-	<p style="margin-right: 500px; padding: 15px;">@Model.Text</p>
+	<p style="margin-right: 200px; padding: 15px;">@Model.Text</p>
 </div>
+<div style="display: inline-block; width: 200px; text-align:center; margin-left: 90px;">
+	<h3>
+		Similar topics
+	</h3>
+	<hr />
+	<div>
+	@foreach(var postId in await post.GetAllPostsIdsWithSimilarTag(Model.Tag))
+		{
+	<a style="padding: 5px 45px; border-radius: 25px;" type="text" asp-controller="Blog" asp-action="Details" asp-route-id="postId" class="btn btn-outline-warning" font-size="20px">Read</a>
+		}
+	</div>
+</div>
+<hr />

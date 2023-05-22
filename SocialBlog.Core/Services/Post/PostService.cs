@@ -194,5 +194,23 @@
 
             return model;
         }
-    }
+
+		public async Task<List<int>> GetAllPostsIdsWithSimilarTag(string tag)
+		{
+            List<Post> posts = await this.repo.All<Post>()
+                .Where(p => p.Tag == tag && p.IsDeleted == false)
+                .OrderBy(p => p.Created)
+                .Take(7)
+                .ToListAsync();
+
+            List<int> ids = new List<int>();
+
+            foreach (var post in posts)
+            {
+                ids.Add(post.Id);
+            }
+
+            return ids;
+		}
+	}
 }
