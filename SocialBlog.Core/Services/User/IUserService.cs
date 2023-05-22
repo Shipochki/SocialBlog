@@ -9,5 +9,7 @@ namespace SocialBlog.Core.Services.User
 	public interface IUserService
 	{
 		Task<string> GetNickNameById(string id);
+
+		Task<string> GetUserProfileImgById(string id);
 	}
 }

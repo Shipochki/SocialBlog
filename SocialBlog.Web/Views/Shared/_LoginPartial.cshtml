@@ -22,7 +22,7 @@
 			<div>
 				<a style="color: white;" class="btn dropdown-toggle" href="#" role="button"
 			   id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-					Hello @await user.GetNickNameById(this.User.Id())! 😃
+					<img style="width: 40px; height: 40px;  border-radius: 50%;" src="@(await user.GetUserProfileImgById(this.User.Id()))" class="" alt="...">
 				</a>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 					<li>

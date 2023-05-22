@@ -17,20 +17,23 @@ namespace SocialBlog.Web.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public Task<IActionResult> Create()
+		public async Task<IActionResult> Create(int id)
 		{
 			return View(new CreateCommentViewModel());
 		}
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> View(CreateCommentViewModel model)
+		public async Task<IActionResult> Create(CreateCommentViewModel model)
 		{
 			model.UserId = this.User.Id();
 
+			int id = int.Parse(HttpContext.Request.Path.Value.ToString().Split('/').Last());
+			model.PostId = id;
+
 			await this.commentService.CreateComment(model);
 
-			return RedirectToAction("Details", "Blog", model.PostId);
+			return RedirectToAction("Details", "Blog", new { id });
 		}
 	}
 }

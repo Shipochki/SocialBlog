@@ -1,6 +1,7 @@
 ﻿namespace SocialBlog.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using SocialBlog.Core.Data.Entities;
     using SocialBlog.Core.Services.Author;
