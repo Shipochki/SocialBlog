@@ -222,24 +222,37 @@
 
             List<int> topIds = await this.favoriteService.GetTopThreeFavoritePostsIds();
 
-			List<PostAllViewModel> posts = await repo.All<Post>()
-			   .Where(p => !p.IsDeleted && topIds.Contains(p.Id))
-			   .Select(m => new PostAllViewModel
-			   {
-				   Id = m.Id,
-				   Title = m.Title,
-				   Description = m.Description,
-				   Tag = m.Tag,
-				   ImageUrlLink = m.ImageUrlLink,
-				   AuthorFullName = $"{m.Author.User.FirstName} {m.Author.User.LastName}",
-				   Created = m.Created.ToString("MM/dd/yyyy"),
-				   TimeForRead = m.TimeForRead,
-			   })
-			   .ToListAsync();
+            List<Post> posts = await this.repo.All<Post>()
+                .Include(p => p.Author)
+                .ThenInclude(p => p.User)
+				.Where(p => !p.IsDeleted && topIds.Contains(p.Id))
+				.ToListAsync();
 
+			List<PostAllViewModel> viewPosts = new List<PostAllViewModel>();
 
+            foreach (var id in topIds)
+            {
+                foreach (var post in posts)
+                {
+                    if(post.Id == id)
+                    {
+                        viewPosts.Add(new PostAllViewModel()
+                        {
+                            Id = post.Id,
+                            Title = post.Title,
+                            Description = post.Description,
+                            Tag = post.Tag,
+                            ImageUrlLink = post.ImageUrlLink,
+                            AuthorFullName = $"{post.Author.User.FirstName} {post.Author.User.LastName}",
+                            Created = post.Created.ToString("MM/dd/yyyy"),
+                            TimeForRead = post.TimeForRead,
+                        });
+                        break;
+                    }
+                }
+            }
 
-			models.TopFavoriteThree = posts;
+			models.TopFavoriteThree = viewPosts;
 
             return models;
 		}

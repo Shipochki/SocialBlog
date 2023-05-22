@@ -10,7 +10,7 @@
         <p class="card-text">@Model.Description</p>
                 <div style="display: inline-block; padding-top: 40px; padding-right: 400px;">
                     <a style="padding: 5px 45px; border-radius: 25px;" type="button" asp-controller="Blog" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-warning" font-size="20px">Read</a>
-                    <a style="border-radius: 25px;" type="button" asp-controller="Favorite" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-info" font-size="20px">❤</a>
+                    <a style="border-radius: 25px; border: 0px solid" type="button" asp-controller="Favorite" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-info" font-size="20px">❤</a>
 				</div> 
 		<p style="display: inline-block;" class="card-text"><small class="text-body-secondary">📅 @Model.Created</small></p>
         <p style="display: inline-block; padding-left: 30px;" class="card-text"><small class="text-body-secondary">👤 @Model.AuthorFullName</small></p>

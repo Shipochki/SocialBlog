@@ -33,7 +33,7 @@
 		<p style="display:inline-block;">📅 @Model.Created</p>
 		<p style="display:inline-block; padding-left: 40px;">👤 @Model.AuthorFullName</p>
 		<p style="display:inline-block; padding-left: 40px;">🕒 @Model.TimeForRead min.</p>
-		<button style="display:inline-block; margin-left: 40px; border-radius: 25px; border-color: white;" type="button" class="btn btn-outline-info">❤</button>
+		<a style="border-radius: 25px; border: 0px solid" type="button" asp-controller="Favorite" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-info" font-size="20px">❤</a>
 	</div>
 	<img style="width: 800px; margin: 35px 0px 35px 0px" src="@Model.ImageUrlLink" />
 	<p style="margin-right: 200px; padding: 15px;">@Model.Text</p>
@@ -55,3 +55,8 @@
 	</div>
 </div>
 <hr />
+<div>
+	<a style="border-radius: 25px;" font-size="20px" class="btn btn-outline-info" asp-area="" asp-controller="Comment" asp-action="Create">Add Comment</a>
+	<h3 style="margin-top: 30px;">Comments: </h3>
+</div>
+

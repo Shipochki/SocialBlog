@@ -2,10 +2,18 @@
 
 @model HomeViewModel
 
-<div class="row">
-	<h1>Top Three Most Favorite Topics</h1>
+<div style="margin-top: 10px; text-align: center; border: 1px solid rgba(0,0,0,.125); border-radius: 0.25rem;" class="row">
+	<h1>Top 3 Favorite Topics</h1>
 	@foreach (var post in Model.TopFavoriteThree)
 	{
 			<partial name="_PostPartial" model="@post" />
+	}
+</div>
+
+<div style="margin-top: 30px; text-align: center; border: 1px solid rgba(0,0,0,.125); border-radius: 0.25rem;" class="row">
+	<h1>Top 3 Comment Topics</h1>
+	@foreach (var post in Model.TopFavoriteThree)
+	{
+		<partial name="_PostPartial" model="@post" />
 	}
 </div>
