@@ -17,9 +17,12 @@ namespace SocialBlog.Controllers
             this.postService = postService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            HomeViewModel model = await this.postService.GetTopThreeFavoritePosts();
+
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

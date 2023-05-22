@@ -1,8 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using SocialBlog.Core.Services.Post.Models;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model HomeViewModel
+
+<div class="row">
+	<h1>Top Three Most Favorite Topics</h1>
+	@foreach (var post in Model.TopFavoriteThree)
+	{
+			<partial name="_PostPartial" model="@post" />
+	}
 </div>

@@ -5,6 +5,7 @@
     using SocialBlog.Core.Services.Favorite.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Collections;
+    using System.Linq;
 
     public class FavoriteService : IFavoriteService
     {
@@ -60,5 +61,30 @@
 
             return model;
         }
-    }
+
+		public async Task<List<int>> GetTopThreeFavoritePostsIds()
+		{
+			IEnumerable<Favorite> favorites = await this.repo
+                .All<Favorite>()
+                .ToListAsync();
+
+            Dictionary<int, int> favoritesCounter = new Dictionary<int, int>();
+
+            foreach (Favorite f in favorites)
+            {
+                if (!favoritesCounter.ContainsKey(f.PostId))
+                {
+                    favoritesCounter.Add(f.PostId, 0);
+                }
+
+                favoritesCounter[f.PostId]++;
+            }
+
+            Dictionary<int, int> sorted = new Dictionary<int, int>(favoritesCounter.OrderByDescending(f => f.Value));
+
+            List<int> ids = sorted.Keys.Take(3).ToList();
+
+            return ids;
+		}
+	}
 }

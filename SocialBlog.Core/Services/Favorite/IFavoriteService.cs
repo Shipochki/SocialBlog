@@ -15,5 +15,6 @@ namespace SocialBlog.Core.Services.Favorite
 
         Task Delete(int id);
 
+        Task<List<int>> GetTopThreeFavoritePostsIds();
 	}
 }

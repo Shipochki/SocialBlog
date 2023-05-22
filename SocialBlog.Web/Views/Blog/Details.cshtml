@@ -10,7 +10,7 @@
 @inject IPostService post
 @inject SignInManager<User> SignInManager
 
-<div style="display: inline-block; width: 1000px;">
+<div style="display: inline-block; width: 1000px; border-right: 1px solid whitesmoke;">
 	@if (this.SignInManager.IsSignedIn(this.User))
 		@if (this.User.IsAdmin() || await this.author.GetAuthorIdByUserId(this.User.Id()) == this.Model.AuthorId)
 		{
@@ -44,9 +44,13 @@
 	</h3>
 	<hr />
 	<div>
-	@foreach(var postId in await post.GetAllPostsIdsWithSimilarTag(Model.Tag))
+	@foreach(var post in await post.GetAllPostsIdsWithSimilarTag(Model.Tag))
 		{
-	<a style="padding: 5px 45px; border-radius: 25px;" type="text" asp-controller="Blog" asp-action="Details" asp-route-id="postId" class="btn btn-outline-warning" font-size="20px">Read</a>
+			if(post.Id != Model.Id)
+			{
+				<a style="margin-bottom: 10px;" type="text" asp-controller="Blog" asp-action="Details" asp-route-id="@post.Id" 
+				class="btn btn-outline-warning" font-size="20px">@post.Title</a>
+			}
 		}
 	</div>
 </div>

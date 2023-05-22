@@ -6,16 +6,21 @@
     using SocialBlog.Core.Services.Post.Models;
     using SocialBlog.Core.Services.Author;
     using SocialBlog.Core.Services.Author.Models;
+    using SocialBlog.Core.Services.Favorite;
 
     public class PostService : IPostService
     {
         private readonly IRepository repo;
         private readonly IAuthorService authorService;
+        private readonly IFavoriteService favoriteService;
 
-        public PostService(IRepository _repo, IAuthorService authorService)
+        public PostService(IRepository _repo, 
+            IAuthorService authorService,
+            IFavoriteService favoriteService)
         {
             this.repo = _repo;
             this.authorService = authorService;
+            this.favoriteService = favoriteService;
         }
 
         public async Task<AllPostsViewModel> All()
@@ -195,22 +200,48 @@
             return model;
         }
 
-		public async Task<List<int>> GetAllPostsIdsWithSimilarTag(string tag)
+		public async Task<List<DetailsSimilarPostViewModel>> GetAllPostsIdsWithSimilarTag(string tag)
 		{
-            List<Post> posts = await this.repo.All<Post>()
+            List<DetailsSimilarPostViewModel> posts = await this.repo.All<Post>()
                 .Where(p => p.Tag == tag && p.IsDeleted == false)
                 .OrderBy(p => p.Created)
+                .Select(p => new DetailsSimilarPostViewModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                })
                 .Take(7)
                 .ToListAsync();
 
-            List<int> ids = new List<int>();
+            return posts;
+		}
 
-            foreach (var post in posts)
-            {
-                ids.Add(post.Id);
-            }
+		public async Task<HomeViewModel> GetTopThreeFavoritePosts()
+		{
+            HomeViewModel models = new HomeViewModel();
 
-            return ids;
+            List<int> topIds = await this.favoriteService.GetTopThreeFavoritePostsIds();
+
+			List<PostAllViewModel> posts = await repo.All<Post>()
+			   .Where(p => !p.IsDeleted && topIds.Contains(p.Id))
+			   .Select(m => new PostAllViewModel
+			   {
+				   Id = m.Id,
+				   Title = m.Title,
+				   Description = m.Description,
+				   Tag = m.Tag,
+				   ImageUrlLink = m.ImageUrlLink,
+				   AuthorFullName = $"{m.Author.User.FirstName} {m.Author.User.LastName}",
+				   Created = m.Created.ToString("MM/dd/yyyy"),
+				   TimeForRead = m.TimeForRead,
+			   })
+			   .ToListAsync();
+
+
+
+			models.TopFavoriteThree = posts;
+
+            return models;
 		}
 	}
 }

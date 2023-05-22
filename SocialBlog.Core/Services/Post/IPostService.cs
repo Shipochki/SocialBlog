@@ -22,7 +22,8 @@
 
         Task<AllPostsViewModel> GetAllPostsByAuthorId(int authorId);
 
-        Task<List<int>> GetAllPostsIdsWithSimilarTag(string tag);
+        Task<List<DetailsSimilarPostViewModel>> GetAllPostsIdsWithSimilarTag(string tag);
 
+        Task<HomeViewModel> GetTopThreeFavoritePosts();
 	}
 }
