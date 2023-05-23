@@ -29,11 +29,15 @@
 			await this.repo.SaveChangesAsync();
 		}
 
-		public async Task DeleteComment(int id)
+		public async Task<int> DeleteComment(int id)
 		{
 			Comment comment = await this.repo.GetByIdAsync<Comment>(id);
 
 			comment.IsDeleted = true;
+
+			await this.repo.SaveChangesAsync();
+
+			return comment.PostId;
 		}
 
 		public async Task<List<CommentViewModel>> GetAllCommentByPostId(int postId)
@@ -46,6 +50,7 @@
 				{
 					Id = c.Id,
 					Text = c.Text,
+					UserId = c.UserId,
 					Created = c.Created.ToString("MM/dd/yyyy"),
 					UserNickName = c.User.NickName,
 					ProfileImgLink = c.User.ProfileImgLink != null ? c.User.ProfileImgLink : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
@@ -53,6 +58,31 @@
 				.ToListAsync();
 				
 			return models;
+		}
+
+		public async Task<List<int>> GetTopThreeCommentPostsIds()
+		{
+			IEnumerable<Comment> comments = await this.repo
+				.All<Comment>()
+				.ToListAsync();
+
+			Dictionary<int, int> commentsCounter = new Dictionary<int, int>();
+
+			foreach (Comment f in comments)
+			{
+				if (!commentsCounter.ContainsKey(f.PostId))
+				{
+					commentsCounter.Add(f.PostId, 0);
+				}
+
+				commentsCounter[f.PostId]++;
+			}
+
+			Dictionary<int, int> sorted = new Dictionary<int, int>(commentsCounter.OrderByDescending(f => f.Value));
+
+			List<int> ids = sorted.Keys.Take(3).ToList();
+
+			return ids;
 		}
 	}
 }

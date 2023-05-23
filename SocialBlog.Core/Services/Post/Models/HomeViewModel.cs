@@ -9,5 +9,7 @@ namespace SocialBlog.Core.Services.Post.Models
 	public class HomeViewModel
 	{
 		public IEnumerable<PostAllViewModel> TopFavoriteThree { get; set; }
+
+		public IEnumerable<PostAllViewModel> TopCommentThree { get; set; }
 	}
 }

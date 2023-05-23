@@ -24,6 +24,7 @@
 
         Task<List<DetailsSimilarPostViewModel>> GetAllPostsIdsWithSimilarTag(string tag);
 
-        Task<HomeViewModel> GetTopThreeFavoritePosts();
+        Task<List<PostAllViewModel>> GetTopThreeFavoritePosts();
+		Task<List<PostAllViewModel>> GetTopThreeCommentPosts();
 	}
 }

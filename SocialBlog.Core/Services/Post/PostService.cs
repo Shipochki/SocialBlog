@@ -7,27 +7,31 @@
     using SocialBlog.Core.Services.Author;
     using SocialBlog.Core.Services.Author.Models;
     using SocialBlog.Core.Services.Favorite;
+    using SocialBlog.Core.Services.Comment;
 
     public class PostService : IPostService
     {
         private readonly IRepository repo;
         private readonly IAuthorService authorService;
         private readonly IFavoriteService favoriteService;
+        private readonly ICommentService commentService;
 
         public PostService(IRepository _repo, 
             IAuthorService authorService,
-            IFavoriteService favoriteService)
+            IFavoriteService favoriteService,
+            ICommentService commentService)
         {
             this.repo = _repo;
             this.authorService = authorService;
             this.favoriteService = favoriteService;
+            this.commentService = commentService;
         }
 
         public async Task<AllPostsViewModel> All()
         {
             List<PostAllViewModel> posts = await repo.All<Post>()
                 .Where(p => !p.IsDeleted)
-                .OrderBy(p => p.Created)
+                .OrderByDescending(p => p.Created)
                 .Select(m => new PostAllViewModel
                 {
                     Id = m.Id,
@@ -216,10 +220,8 @@
             return posts;
 		}
 
-		public async Task<HomeViewModel> GetTopThreeFavoritePosts()
+		public async Task<List<PostAllViewModel>> GetTopThreeFavoritePosts()
 		{
-            HomeViewModel models = new HomeViewModel();
-
             List<int> topIds = await this.favoriteService.GetTopThreeFavoritePostsIds();
 
             List<Post> posts = await this.repo.All<Post>()
@@ -252,9 +254,44 @@
                 }
             }
 
-			models.TopFavoriteThree = viewPosts;
+            return viewPosts;
+		}
 
-            return models;
+		public async Task<List<PostAllViewModel>> GetTopThreeCommentPosts()
+		{
+			List<int> topIds = await this.commentService.GetTopThreeCommentPostsIds();
+
+			List<Post> posts = await this.repo.All<Post>()
+				.Include(p => p.Author)
+				.ThenInclude(p => p.User)
+				.Where(p => !p.IsDeleted && topIds.Contains(p.Id))
+				.ToListAsync();
+
+			List<PostAllViewModel> viewPosts = new List<PostAllViewModel>();
+
+			foreach (var id in topIds)
+			{
+				foreach (var post in posts)
+				{
+					if (post.Id == id)
+					{
+						viewPosts.Add(new PostAllViewModel()
+						{
+							Id = post.Id,
+							Title = post.Title,
+							Description = post.Description,
+							Tag = post.Tag,
+							ImageUrlLink = post.ImageUrlLink,
+							AuthorFullName = $"{post.Author.User.FirstName} {post.Author.User.LastName}",
+							Created = post.Created.ToString("MM/dd/yyyy"),
+							TimeForRead = post.TimeForRead,
+						});
+						break;
+					}
+				}
+			}
+
+			return viewPosts;
 		}
 	}
 }

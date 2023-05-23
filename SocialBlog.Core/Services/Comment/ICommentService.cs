@@ -6,8 +6,10 @@ namespace SocialBlog.Core.Services.Comment
 	{
 		Task CreateComment(CreateCommentViewModel model);
 
-		Task DeleteComment(int id);
+		Task<int> DeleteComment(int id);
 
 		Task<List<CommentViewModel>> GetAllCommentByPostId(int postId);
+
+		Task<List<int>> GetTopThreeCommentPostsIds();
 	}
 }

@@ -20,7 +20,9 @@ namespace SocialBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            HomeViewModel model = await this.postService.GetTopThreeFavoritePosts();
+            HomeViewModel model = new HomeViewModel();
+            model.TopFavoriteThree = await this.postService.GetTopThreeFavoritePosts();
+            model.TopCommentThree = await this.postService.GetTopThreeCommentPosts();
 
             return View(model);
         }

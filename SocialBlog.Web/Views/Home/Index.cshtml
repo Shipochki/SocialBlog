@@ -12,7 +12,7 @@
 
 <div style="margin-top: 30px; text-align: center; border: 1px solid rgba(0,0,0,.125); border-radius: 0.25rem;" class="row">
 	<h1>Top 3 Comment Topics</h1>
-	@foreach (var post in Model.TopFavoriteThree)
+	@foreach (var post in Model.TopCommentThree)
 	{
 		<partial name="_PostPartial" model="@post" />
 	}

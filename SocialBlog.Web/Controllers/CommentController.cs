@@ -35,5 +35,14 @@ namespace SocialBlog.Web.Controllers
 
 			return RedirectToAction("Details", "Blog", new { id });
 		}
+
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> Delete(int id)
+		{
+			id = await this.commentService.DeleteComment(id);
+
+			return RedirectToAction("Details", "Blog", new { id });
+		}
 	}
 }
