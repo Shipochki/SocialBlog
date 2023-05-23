@@ -11,5 +11,7 @@ namespace SocialBlog.Core.Services.Comment
 		Task<List<CommentViewModel>> GetAllCommentByPostId(int postId);
 
 		Task<List<int>> GetTopThreeCommentPostsIds();
+
+		Task<List<CommentViewModel>> GetAllComment();
 	}
 }

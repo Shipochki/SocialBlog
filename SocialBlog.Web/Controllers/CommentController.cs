@@ -44,5 +44,15 @@ namespace SocialBlog.Web.Controllers
 
 			return RedirectToAction("Details", "Blog", new { id });
 		}
+
+		[Authorize]
+		[HttpGet]
+		public async Task<IActionResult> All()
+		{
+			AllCommentViewModel comments = new AllCommentViewModel();
+			comments.Comments = await this.commentService.GetAllComment();
+
+			return View(comments);
+		}
 	}
 }

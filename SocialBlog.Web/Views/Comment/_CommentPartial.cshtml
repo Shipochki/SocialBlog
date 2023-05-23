@@ -1,0 +1,18 @@
+﻿@using SocialBlog.Core.Services.Comment.Models;
+
+@model CommentViewModel
+
+<div style="display:block; margin: 10px;" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<img style="width: 40px; height: 40px;  border-radius: 50%; margin-right: 10px;" src="@Model.ProfileImgLink" class="" alt="...">
+				<strong class="me-auto">@Model.UserNickName</strong>
+				<small>@Model.Created</small>
+				<form class="" asp-controller="Comment"
+				asp-area="" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+					<input class="btn-close" type="submit" value="" />
+				</form>
+			</div>
+			<div class="toast-body">
+		@Model.Text
+	</div>
+</div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SocialBlog.Core.Services.Author;
 using SocialBlog.Core.Services.Author.Models;
 using SocialBlog.Core.Services.User;
@@ -16,6 +17,7 @@ namespace SocialBlog.Web.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public IActionResult Create()
 		{
 			AuthorCreateViewModel model = new AuthorCreateViewModel();
@@ -23,6 +25,7 @@ namespace SocialBlog.Web.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Create(AuthorCreateViewModel model)
 		{
 			model.UserId = this.User.Id();
@@ -32,6 +35,7 @@ namespace SocialBlog.Web.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> AllCandidate()
 		{
 			AllCandidateAuthorsViewModel model = await this.authorService.GetAllCandidate();
@@ -39,6 +43,7 @@ namespace SocialBlog.Web.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Approve(int id)
 		{
 			await this.authorService.ApproveAuthor(id);
@@ -47,6 +52,7 @@ namespace SocialBlog.Web.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Delete(int id)
 		{
 			await this.authorService.DeleteAuthor(id);
@@ -55,11 +61,19 @@ namespace SocialBlog.Web.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Activate(int id)
 		{
 			await this.authorService.ActivevateAuthor(id);
 
 			return RedirectToAction("Index", "Home");
+		}
+
+		public async Task<IActionResult> All()
+		{
+			AllAuthorViewModel model = await this.authorService.GetAllAuthors();
+
+			return View(model);
 		}
 	}
 }

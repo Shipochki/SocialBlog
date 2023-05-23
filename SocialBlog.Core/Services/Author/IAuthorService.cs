@@ -17,5 +17,7 @@ namespace SocialBlog.Core.Services.Author
 		Task DeleteAuthor(int id);
 
 		Task ActivevateAuthor(int id);
+
+		Task<AllAuthorViewModel> GetAllAuthors();
 	}
 }

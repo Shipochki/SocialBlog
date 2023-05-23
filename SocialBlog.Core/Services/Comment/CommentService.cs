@@ -40,6 +40,26 @@
 			return comment.PostId;
 		}
 
+		public async Task<List<CommentViewModel>> GetAllComment()
+		{
+			List<CommentViewModel> models = await this.repo
+				.All<Comment>()
+			.OrderBy(c => c.Created)
+				.Where(c => c.IsDeleted == false)
+				.Select(c => new CommentViewModel
+				{
+					Id = c.Id,
+					Text = c.Text,
+					UserId = c.UserId,
+					Created = c.Created.ToString("MM/dd/yyyy"),
+					UserNickName = c.User.NickName,
+					ProfileImgLink = c.User.ProfileImgLink != null ? c.User.ProfileImgLink : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+				})
+				.ToListAsync();
+
+			return models;
+		}
+
 		public async Task<List<CommentViewModel>> GetAllCommentByPostId(int postId)
 		{
 			List<CommentViewModel> models = await this.repo

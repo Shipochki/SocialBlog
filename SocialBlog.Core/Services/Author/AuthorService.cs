@@ -105,5 +105,27 @@
 
 			return author.Id;
         }
-	}
+
+        public async Task<AllAuthorViewModel> GetAllAuthors()
+        {
+			List<AdminAuthorViewModel> authors = await this.repo
+				 .All<Author>()
+				 .Where(a => a.IsDeleted == false)
+				 .Select(a => new AdminAuthorViewModel()
+				 {
+					 Id = a.Id,
+					 PhoneNumber = a.PhoneNumber,
+					 UserFirstName = a.User.FirstName,
+					 UserLastName = a.User.LastName,
+					 UserNickName = a.User.NickName,
+					 IsActive = a.IsActive,
+				 })
+				 .ToListAsync();
+
+			AllAuthorViewModel model = new AllAuthorViewModel();
+			model.Authors = authors;
+
+			return model;
+        }
+    }
 }

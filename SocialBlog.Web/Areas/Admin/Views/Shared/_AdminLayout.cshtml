@@ -25,6 +25,12 @@
 						<li class="nav-item">
 							<a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="All">Blog</a>
 						</li>
+						<li>
+							<a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="Create">Create Post</a>
+						</li>
+						<li  class="nav-item">
+							<a style="color: white;" class="nav-link" asp-area="" asp-controller="Blog" asp-action="AllByAuthor">My Posts</a>
+						</li>
 						<li class="nav-item dropdown">
 							<div>
 								<a style="color: white;" class="btn dropdown-toggle" href="#" role="button"
@@ -33,18 +39,21 @@
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 									<li>
-										<a class="dropdown-item nav-link text-dark" asp-area=""
-										   asp-controller="Blog" asp-action="Create">Create Post</a>
-									</li>
-									<li>
 										<a class="dropdown-item nav-link text-dark" asp-area="Admin"
 										   asp-controller="Author" asp-action="AllCandidate">All Candidates</a>
 									</li>
 									<li class="nav-item">
-										<a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="AllByAuthor">My Posts</a>
+										<a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="AdminAll">All Posts</a>
 									</li>
 									<li class="nav-item">
-										<a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="AdminAll">All Posts</a>
+										<a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="All">All Comments</a>
+									</li>
+									<li class="nav-item">
+										<a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Author" asp-action="All">All Authors</a>
+									</li>
+									<li class="nav-item">
+										<a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="User" asp-action="All">All Users</a>
+
 									</li>
 								</ul>
 							</div>

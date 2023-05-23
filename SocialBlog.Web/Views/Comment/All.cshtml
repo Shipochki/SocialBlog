@@ -1,0 +1,16 @@
+﻿@using SocialBlog.Core.Services.Comment.Models;
+
+@model AllCommentViewModel
+
+
+@if (!Model.Comments.Any())
+{
+	<h2 class="text-center">No Post found</h2>
+}
+
+<div class="row">
+	@foreach (var post in Model.Comments)
+	{
+		<partial name="_CommentPartial" model="@post" />
+	}
+</div>
