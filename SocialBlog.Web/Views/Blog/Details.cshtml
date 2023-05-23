@@ -68,11 +68,12 @@
 				<strong class="me-auto">@comment.UserNickName</strong>
 				<small>@comment.Created</small>
 				@if(this.SignInManager.IsSignedIn(this.User))
-				@if (this.User.IsAdmin() || this.User.Id() == comment.UserId)
+				@if (this.User.IsAdmin() || this.User.Id() == comment.UserId || 
+				await this.author.GetAuthorIdByUserId(this.User.Id()) == Model.AuthorId)
 				{
 					
 								<form class="" asp-controller="Comment"
-			  asp-area="" asp-action="Delete" asp-route-id="@comment.Id" method="post">
+								asp-area="" asp-action="Delete" asp-route-id="@comment.Id" method="post">
 								<input class="btn-close" type="submit" value="" />
 							</form>
 				}

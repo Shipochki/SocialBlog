@@ -64,6 +64,7 @@
 		{
 			IEnumerable<Comment> comments = await this.repo
 				.All<Comment>()
+				.Where(c => c.IsDeleted == false)
 				.ToListAsync();
 
 			Dictionary<int, int> commentsCounter = new Dictionary<int, int>();

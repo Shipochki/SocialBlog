@@ -22,11 +22,18 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(AllPostsQueryModel query)
         {
-            AllPostsViewModel models = await this.postService.All();
+            PostQueryServiceModel queryResult = await this.postService
+                .All(
+                query.SearchTerm, 
+                query.CurrentPage, 
+                AllPostsQueryModel.PostsPerPage);
 
-            return View(models);
+            query.TotalPostsCount = queryResult.TotalPostsCount;
+            query.Posts = queryResult.Posts;
+
+            return View(query);
         }
 
         [HttpGet]

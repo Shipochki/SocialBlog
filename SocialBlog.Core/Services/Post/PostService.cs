@@ -27,11 +27,26 @@
             this.commentService = commentService;
         }
 
-        public async Task<AllPostsViewModel> All()
+        public async Task<PostQueryServiceModel> All(
+            string searchTerm = null, 
+            int currentPage = 1, 
+            int postPerPage = 1)
         {
-            List<PostAllViewModel> posts = await repo.All<Post>()
-                .Where(p => !p.IsDeleted)
-                .OrderByDescending(p => p.Created)
+            IQueryable<Post> postsQuery = this.repo.All<Post>().OrderByDescending(c => c.Created).AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(searchTerm))
+			{
+				postsQuery = postsQuery.Where(h =>
+				h.Title.ToLower().Contains(searchTerm.ToLower()) ||
+				h.Tag.ToLower().Contains(searchTerm.ToLower()) ||
+				h.Description.ToLower().Contains(searchTerm.ToLower()) ||
+				h.Text.ToLower().Contains(searchTerm.ToLower()));
+			}
+
+            List<PostAllViewModel> posts = await postsQuery
+                .Skip((currentPage - 1) * postPerPage)
+                .Where(p => p.IsDeleted == false)
+                .Take(postPerPage)
                 .Select(m => new PostAllViewModel
                 {
                     Id = m.Id,
@@ -45,8 +60,10 @@
                 })
                 .ToListAsync();
 
-            AllPostsViewModel model = new AllPostsViewModel();
-            model.PostsCount = posts.Count;
+            int totalPosts = postsQuery.Count();
+
+            PostQueryServiceModel model = new PostQueryServiceModel();
+            model.TotalPostsCount = totalPosts;
             model.Posts = posts;
 
             return model;

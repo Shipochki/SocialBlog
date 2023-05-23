@@ -4,7 +4,7 @@
 
     public interface IPostService
     {
-        Task<AllPostsViewModel> All();
+        Task<PostQueryServiceModel> All(string searchTerm = null, int currentPage = 1, int postPerPage = 1);
 
         Task<TopThreeFavoritePostsViewModel> TopThreePosts();
 
