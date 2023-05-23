@@ -77,9 +77,9 @@
             }
 
             model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
-            int postId = await this.postService.CreatePost(model);
+            int id = await this.postService.CreatePost(model);
 
-            return View(nameof(Details), postId);
+            return RedirectToAction("Details", "Blog", new { id });
         }
 
         [HttpGet]
@@ -163,5 +163,16 @@
 
             return View(model);
         }
-    }
+
+        [HttpGet]
+        [Authorize]
+		public async Task<IActionResult> AdminAll()
+		{
+			AllPostsViewModel model = new AllPostsViewModel();
+			model.Posts = await this.postService.GetAllPosts();
+			model.PostsCount = model.Posts.Count();
+
+			return View(model);
+		}
+	}
 }

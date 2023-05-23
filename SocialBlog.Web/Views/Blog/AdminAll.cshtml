@@ -1,0 +1,16 @@
+﻿@using SocialBlog.Core.Services.Post.Models;
+
+@model AllPostsViewModel
+
+
+@if (!Model.Posts.Any())
+{
+	<h2 class="text-center">No Post found</h2>
+}
+
+<div class="row">
+	@foreach (var post in Model.Posts)
+	{
+		<partial name="_AdminPostPartial" model="@post" />
+	}
+</div>

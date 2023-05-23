@@ -32,7 +32,9 @@
             int currentPage = 1, 
             int postPerPage = 1)
         {
-            IQueryable<Post> postsQuery = this.repo.All<Post>().OrderByDescending(c => c.Created).AsQueryable();
+            IQueryable<Post> postsQuery = this.repo.All<Post>()
+                .OrderByDescending(c => c.Created)
+                .AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(searchTerm))
 			{
@@ -84,7 +86,7 @@
                 AuthorId = model.AuthorId,
             };
 
-            await this.repo.AddAsync<Post>(post);
+            await this.repo.AddAsync(post);
 
             await this.repo.SaveChangesAsync();
 
@@ -309,6 +311,26 @@
 			}
 
 			return viewPosts;
+		}
+
+		public async Task<List<PostAllViewModel>> GetAllPosts()
+		{
+            List<PostAllViewModel> posts = await this.repo
+                .All<Post>()
+                .Select(c => new PostAllViewModel
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Description = c.Description,
+                    Tag = c.Tag,
+                    ImageUrlLink = c.ImageUrlLink,
+                    AuthorFullName = $"{c.Author.User.FirstName} {c.Author.User.LastName}",
+                    Created = c.Created.ToString("MM/dd/yyyy"),
+                    TimeForRead = c.TimeForRead,
+                })
+                .ToListAsync();
+
+            return posts;
 		}
 	}
 }
