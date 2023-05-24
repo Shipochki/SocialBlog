@@ -1,17 +1,12 @@
-﻿using SocialBlog.Core.Services.Favorite.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialBlog.Core.Services.Favorite
+﻿namespace SocialBlog.Core.Services.Favorite
 {
+    using SocialBlog.Core.Services.Favorite.Models;
+
     public interface IFavoriteService
     {
         Task CreateFavorite(CreateFavoriteViewModel model);
 
-        Task<AllFavoriteViewModel> GetAllFavoriteByUserId(string userId);
+        Task<List<FavoriteAllViewModel>> GetAllFavoriteByUserId(string userId);
 
         Task Delete(int id);
 

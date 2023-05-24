@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialBlog.Core.Services.User;
-using SocialBlog.Core.Services.User.Models;
-using SocialBlog.Infranstructure;
-
-namespace SocialBlog.Web.Controllers
+﻿namespace SocialBlog.Web.Controllers
 {
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Mvc;
+	using SocialBlog.Core.Services.User;
+	using SocialBlog.Infranstructure;
+	using SocialBlog.Web.Models.User;
+
 	public class UserController : Controller
 	{
 		private readonly IUserService userService;
@@ -24,7 +24,8 @@ namespace SocialBlog.Web.Controllers
 				return Unauthorized();
 			}
 
-			AllUserViewModel model = await this.userService.GetAllUsers();
+			AllUserViewModel model = new AllUserViewModel();
+			model.Users = await this.userService.GetAllUsers();
 			return View(model);
 		}
 	}

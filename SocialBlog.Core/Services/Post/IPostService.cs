@@ -18,7 +18,7 @@
 
         Task<PostDeleteViewModel> GetPostDeleteViweById(int id);
 
-        Task<AllPostsViewModel> GetAllPostsByAuthorId(int authorId);
+        Task<List<PostAllViewModel>> GetAllPostsByAuthorId(int authorId);
 
         Task<List<DetailsSimilarPostViewModel>> GetAllPostsIdsWithSimilarTag(string tag);
 

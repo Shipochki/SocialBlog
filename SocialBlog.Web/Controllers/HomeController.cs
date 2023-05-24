@@ -1,19 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SocialBlog.Core.Services.Post;
-using SocialBlog.Core.Services.Post.Models;
-using SocialBlog.Models;
-using System.Diagnostics;
-
-namespace SocialBlog.Controllers
+﻿namespace SocialBlog.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using SocialBlog.Core.Services.Post;
+    using SocialBlog.Models;
+    using SocialBlog.Web.Models.Post;
+    using System.Diagnostics;
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
         private readonly IPostService postService;
 
-        public HomeController(ILogger<HomeController> logger, IPostService postService)
+        public HomeController(IPostService postService)
         {
-            this.logger = logger;
             this.postService = postService;
         }
 

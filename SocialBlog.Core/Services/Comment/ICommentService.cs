@@ -1,7 +1,7 @@
-﻿using SocialBlog.Core.Services.Comment.Models;
-
-namespace SocialBlog.Core.Services.Comment
+﻿namespace SocialBlog.Core.Services.Comment
 {
+	using SocialBlog.Core.Services.Comment.Models;
+
 	public interface ICommentService
 	{
 		Task CreateComment(CreateCommentViewModel model);

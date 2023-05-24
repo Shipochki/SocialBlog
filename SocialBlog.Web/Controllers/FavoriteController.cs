@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using SocialBlog.Core.Services.Favorite;
-using SocialBlog.Core.Services.Favorite.Models;
-using SocialBlog.Infranstructure;
-
-namespace SocialBlog.Web.Controllers
+﻿namespace SocialBlog.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using SocialBlog.Core.Services.Favorite;
+    using SocialBlog.Core.Services.Favorite.Models;
+    using SocialBlog.Infranstructure;
+    using SocialBlog.Web.Models.Favorite;
+
     public class FavoriteController : Controller
     {
         private readonly IFavoriteService favoriteService;
@@ -20,7 +20,8 @@ namespace SocialBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            AllFavoriteViewModel model = await this.favoriteService.GetAllFavoriteByUserId(this.User.Id());
+            AllFavoriteViewModel model = new AllFavoriteViewModel();
+            model.Favorites = await this.favoriteService.GetAllFavoriteByUserId(this.User.Id());
 
             return View(model);
         }

@@ -4,6 +4,7 @@
 	using SocialBlog.Core.Data.Common;
 	using SocialBlog.Core.Services.User.Models;
 	using Microsoft.EntityFrameworkCore;
+	using System.Collections.Generic;
 
 	public class UserService : IUserService
 	{
@@ -14,10 +15,9 @@
 			this.repo = repo;
 		}
 
-		public async Task<AllUserViewModel> GetAllUsers()
+		public async Task<List<UserViewModel>> GetAllUsers()
 		{
-			AllUserViewModel model = new AllUserViewModel();
-			model.Users = await this.repo
+            List<UserViewModel> users = await this.repo
 				.All<User>()
 				.Select(u => new UserViewModel()
 				{
@@ -29,7 +29,7 @@
 				})
 				.ToListAsync();
 
-			return model;
+			return users;
 		}
 
 		public async Task<string> GetNickNameById(string id)

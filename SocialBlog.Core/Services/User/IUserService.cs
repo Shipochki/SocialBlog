@@ -1,18 +1,13 @@
-﻿using SocialBlog.Core.Services.User.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialBlog.Core.Services.User
+﻿namespace SocialBlog.Core.Services.User
 {
+	using SocialBlog.Core.Services.User.Models;
+
 	public interface IUserService
 	{
 		Task<string> GetNickNameById(string id);
 
 		Task<string> GetUserProfileImgById(string id);
 
-		Task<AllUserViewModel> GetAllUsers();
+		Task<List<UserViewModel>> GetAllUsers();
 	}
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Linq.Expressions;
+﻿
 
 namespace SocialBlog.Core.Data.Common
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// Implementation of repository access methods
     /// for Relational Database Engine

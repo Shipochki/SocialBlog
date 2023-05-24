@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialBlog.Core.Services.Comment;
-using SocialBlog.Core.Services.Comment.Models;
-using SocialBlog.Infranstructure;
-
-namespace SocialBlog.Web.Controllers
+﻿namespace SocialBlog.Web.Controllers
 {
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Mvc;
+	using SocialBlog.Core.Services.Comment;
+	using SocialBlog.Core.Services.Comment.Models;
+	using SocialBlog.Infranstructure;
+	using SocialBlog.Web.Models.Comment;
+
 	public class CommentController : Controller
 	{
 		private readonly ICommentService commentService;

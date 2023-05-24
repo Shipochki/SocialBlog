@@ -1,13 +1,12 @@
 ﻿namespace SocialBlog.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.Mvc;
-    using SocialBlog.Core.Data.Entities;
     using SocialBlog.Core.Services.Author;
     using SocialBlog.Core.Services.Post;
     using SocialBlog.Core.Services.Post.Models;
-    using static SocialBlog.Core.DataConstants;
+    using SocialBlog.Web.Models.Post;
+    using System.Linq;
     using static SocialBlog.Infranstructure.ClaimsPrincipalExtensions;
 
     public class BlogController : Controller
@@ -170,7 +169,9 @@
                 return View(nameof(All));
             }
 
-            AllPostsViewModel model = await this.postService.GetAllPostsByAuthorId(authorId);
+            AllPostsViewModel model = new AllPostsViewModel();
+            model.Posts = await this.postService.GetAllPostsByAuthorId(authorId);
+            model.PostsCount = model.Posts.Count();
 
             return View(model);
         }

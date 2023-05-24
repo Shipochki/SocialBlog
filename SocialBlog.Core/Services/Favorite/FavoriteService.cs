@@ -43,11 +43,9 @@
             await this.repo.SaveChangesAsync();
 		}
 
-		public async Task<AllFavoriteViewModel> GetAllFavoriteByUserId(string userId)
+		public async Task<List<FavoriteAllViewModel>> GetAllFavoriteByUserId(string userId)
         {
-            AllFavoriteViewModel model = new AllFavoriteViewModel()
-            {
-                Favorites = await this.repo.All<Favorite>()
+            List<FavoriteAllViewModel> favorites = await this.repo.All<Favorite>()
                 .Where(f => f.UserId == userId)
                 .Select(f => new FavoriteAllViewModel()
                 {
@@ -56,10 +54,9 @@
                     PostTitle = f.Post.Title,
                     PostImgUrlLink = f.Post.ImageUrlLink
                 })
-                .ToListAsync()
-            };
+                .ToListAsync();
 
-            return model;
+            return favorites;
         }
 
 		public async Task<List<int>> GetTopThreeFavoritePostsIds()

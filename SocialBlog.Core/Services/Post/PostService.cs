@@ -193,7 +193,7 @@
             return model;
 		}
 
-        public async Task<AllPostsViewModel> GetAllPostsByAuthorId(int authorId)
+        public async Task<List<PostAllViewModel>> GetAllPostsByAuthorId(int authorId)
         {
             List<PostAllViewModel> posts = await repo.All<Post>()
                 .Where(p => !p.IsDeleted && p.AuthorId == authorId)
@@ -211,11 +211,7 @@
                 })
                 .ToListAsync();
 
-            AllPostsViewModel model = new AllPostsViewModel();
-            model.PostsCount = posts.Count;
-            model.Posts = posts;
-
-            return model;
+            return posts;
         }
 
 		public async Task<List<DetailsSimilarPostViewModel>> GetAllPostsIdsWithSimilarTag(string tag)

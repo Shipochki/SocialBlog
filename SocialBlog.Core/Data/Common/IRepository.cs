@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-
-namespace SocialBlog.Core.Data.Common
+﻿namespace SocialBlog.Core.Data.Common
 {
+    using System.Linq.Expressions;
+
     /// <summary>
     /// Abstraction of repository access methods
     /// </summary>
