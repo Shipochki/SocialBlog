@@ -79,6 +79,8 @@
             model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
             int id = await this.postService.CreatePost(model);
 
+            TempData["message"] = $"You have sucssessfuly added a post '{model.Title}'!";
+
             return RedirectToAction("Details", "Blog", new { id });
         }
 
@@ -112,6 +114,8 @@
             }
 
             await this.postService.EditPost(model);
+
+            TempData["message"] = $"You have sucssessfuly edit a post '{model.Title}'!";
 
             return RedirectToAction(nameof(Details), new { model.Id });
 		}
@@ -150,6 +154,8 @@
 
             await this.postService.DeletePost(model.Id);
 
+            TempData["message"] = $"You have sucssessfuly delete a post '{model.Title}'!";
+
             return View(nameof(All));
 		}
 
@@ -158,6 +164,11 @@
         public async Task<IActionResult> AllByAuthor()
         {
             int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
+
+            if(authorId == -1)
+            {
+                return View(nameof(All));
+            }
 
             AllPostsViewModel model = await this.postService.GetAllPostsByAuthorId(authorId);
 
@@ -168,6 +179,11 @@
         [Authorize]
 		public async Task<IActionResult> AdminAll()
 		{
+            if (!this.User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
 			AllPostsViewModel model = new AllPostsViewModel();
 			model.Posts = await this.postService.GetAllPosts();
 			model.PostsCount = model.Posts.Count();

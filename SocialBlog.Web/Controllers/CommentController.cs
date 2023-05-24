@@ -17,7 +17,7 @@ namespace SocialBlog.Web.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> Create(int id)
+		public IActionResult Create(int id)
 		{
 			return View(new CreateCommentViewModel());
 		}
@@ -49,6 +49,11 @@ namespace SocialBlog.Web.Controllers
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
 			AllCommentViewModel comments = new AllCommentViewModel();
 			comments.Comments = await this.commentService.GetAllComment();
 

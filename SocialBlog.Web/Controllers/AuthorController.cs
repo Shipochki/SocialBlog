@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SocialBlog.Core.Services.Author;
-using SocialBlog.Core.Services.Author.Models;
-using SocialBlog.Core.Services.User;
-using SocialBlog.Infranstructure;
-
-namespace SocialBlog.Web.Controllers
+﻿namespace SocialBlog.Web.Controllers
 {
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Mvc;
+	using SocialBlog.Core.Services.Author;
+	using SocialBlog.Core.Services.Author.Models;
+	using SocialBlog.Web.Models.Author;
+	using SocialBlog.Infranstructure;
+
+
 	public class AuthorController : Controller
 	{
 		private IAuthorService authorService;
@@ -18,17 +19,29 @@ namespace SocialBlog.Web.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
-			AuthorCreateViewModel model = new AuthorCreateViewModel();
+			if(await this.authorService.GetAuthorIdByUserId(this.User.Id()) != -1)
+			{
+                TempData["message"] = "Your application has been sent.";
+                return RedirectToAction("All", "Blog");
+			}
+
+			AuthorCreateServiceModel model = new AuthorCreateServiceModel();
 			return View(model);
 		}
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> Create(AuthorCreateViewModel model)
+		public async Task<IActionResult> Create(AuthorCreateServiceModel model)
 		{
-			model.UserId = this.User.Id();
+            if (await this.authorService.GetAuthorIdByUserId(this.User.Id()) != -1)
+            {
+                TempData["message"] = "Your application has been sent.";
+                return RedirectToAction("All", "Blog");
+            }
+
+            model.UserId = this.User.Id();
 			await this.authorService.CreateAuthor(model);
 
 			return View(nameof(AllCandidate));
@@ -43,7 +56,8 @@ namespace SocialBlog.Web.Controllers
 				return Unauthorized();
 			}
 
-			AllCandidateAuthorsViewModel model = await this.authorService.GetAllCandidate();
+			AllCandidateAuthorsViewModel model = new AllCandidateAuthorsViewModel();
+			model.Candidates = await this.authorService.GetAllCandidate();
 			return View(model);
 		}
 
@@ -98,7 +112,8 @@ namespace SocialBlog.Web.Controllers
 				return Unauthorized();
 			}
 
-			AllAuthorViewModel model = await this.authorService.GetAllAuthors();
+			AllAuthorViewModel model = new AllAuthorViewModel();
+			model.Authors = await this.authorService.GetAllAuthors();
 
 			return View(model);
 		}

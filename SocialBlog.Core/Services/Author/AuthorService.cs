@@ -41,7 +41,7 @@
 			await this.repo.SaveChangesAsync();
 		}
 
-		public async Task CreateAuthor(AuthorCreateViewModel model)
+		public async Task CreateAuthor(AuthorCreateServiceModel model)
 		{
 			Author author = new Author()
 			{
@@ -53,10 +53,8 @@
 			await this.repo.SaveChangesAsync();
 		}
 
-		public async Task<AllCandidateAuthorsViewModel> GetAllCandidate()
+		public async Task<List<AuthorCandidateViewModel>> GetAllCandidate()
 		{
-			AllCandidateAuthorsViewModel model = new AllCandidateAuthorsViewModel();
-
 			List<AuthorCandidateViewModel> candidates = await this.repo.All<Author>()
 				.Where(a => a.IsActive == false)
 				.Select(a => new AuthorCandidateViewModel
@@ -68,9 +66,7 @@
 				})
 				.ToListAsync();
 
-			model.Candidates = candidates;
-
-			return model;
+			return candidates;
 		}
 
 		public async Task<AuthorFullNameViewModel> GetAuthorFullNameById(int id)
@@ -106,7 +102,7 @@
 			return author.Id;
         }
 
-        public async Task<AllAuthorViewModel> GetAllAuthors()
+        public async Task<List<AdminAuthorViewModel>> GetAllAuthors()
         {
 			List<AdminAuthorViewModel> authors = await this.repo
 				 .All<Author>()
@@ -122,10 +118,7 @@
 				 })
 				 .ToListAsync();
 
-			AllAuthorViewModel model = new AllAuthorViewModel();
-			model.Authors = authors;
-
-			return model;
+			return authors;
         }
 
 		public async Task Deactivate(int id)

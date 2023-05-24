@@ -3,7 +3,7 @@
 	using System.ComponentModel.DataAnnotations;
 	using static SocialBlog.Core.DataConstants.Author;
 
-	public class AuthorCreateViewModel
+	public class AuthorCreateServiceModel
 	{
 		[Required]
 		[MaxLength(PhoneNumberMaxLength)]

@@ -10,11 +10,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SocialBlog</title>
+    <title>@ViewData["Title"] SocialBlog</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SocialBlog.styles.css" asp-append-version="true" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
     <header>
@@ -52,8 +51,17 @@
             </div>
         </nav>
     </header>
-    <div style="padding-top: 10px;" class="container">
+    <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["message"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

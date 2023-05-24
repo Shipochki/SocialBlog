@@ -1,16 +1,16 @@
-﻿using SocialBlog.Core.Services.Author.Models;
-
-namespace SocialBlog.Core.Services.Author
+﻿namespace SocialBlog.Core.Services.Author
 {
+	using SocialBlog.Core.Services.Author.Models;
+
 	public interface IAuthorService
 	{
 		Task<AuthorFullNameViewModel> GetAuthorFullNameById(int id);
 
 		Task<int> GetAuthorIdByUserId(string userId);
 
-		Task CreateAuthor(AuthorCreateViewModel model);
+		Task CreateAuthor(AuthorCreateServiceModel model);
 
-		Task<AllCandidateAuthorsViewModel> GetAllCandidate();
+		Task<List<AuthorCandidateViewModel>> GetAllCandidate();
 
 		Task ApproveAuthor(int id);
 
@@ -18,7 +18,7 @@ namespace SocialBlog.Core.Services.Author
 
 		Task ActivevateAuthor(int id);
 
-		Task<AllAuthorViewModel> GetAllAuthors();
+		Task<List<AdminAuthorViewModel>> GetAllAuthors();
 
 		Task Deactivate(int id);
 	}
