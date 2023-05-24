@@ -6,8 +6,6 @@
     {
         Task<PostQueryServiceModel> All(string searchTerm = null, int currentPage = 1, int postPerPage = 1);
 
-        Task<TopThreeFavoritePostsViewModel> TopThreePosts();
-
         Task<DetailsPostViewModel> GetDetailsPostById(int id);
 
         Task<int> CreatePost(CreatePostViewModel model);

@@ -144,11 +144,6 @@
             return model;
 		}
 
-		public Task<TopThreeFavoritePostsViewModel> TopThreePosts()
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task EditPost(EditPostViewModel model)
 		{
 			Post post = await this.repo.GetByIdAsync<Post>(model.Id);

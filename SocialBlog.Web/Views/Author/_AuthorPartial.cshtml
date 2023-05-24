@@ -10,7 +10,10 @@
 				<p style="display: inline-block; padding-right: 10px;" class="card-title"><strong>FirstName:</strong> @Model.UserFirstName</p>
 				<p style="display: inline-block; padding-right: 10px;" class="card-title"><strong>LastName:</strong> @Model.UserLastName</p>
 				<p class="card-title"><strong>PhoneNumber:</strong> @Model.PhoneNumber</p>
-				<a type="button" class="btn btn-danger" asp-controller="Author" asp-action="Deactivate" asp-route-id="@Model.Id">Deactivate</a>
+				@if (Model.IsActive)
+				{
+					<a type="button" class="btn btn-danger" asp-controller="Author" asp-action="Deactivate" asp-route-id="@Model.Id">Deactivate</a>
+				}
 				<a type="button" class="btn btn-danger" asp-controller="Author" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
 			</div>
 		</div>

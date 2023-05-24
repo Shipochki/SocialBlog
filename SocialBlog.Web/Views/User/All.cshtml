@@ -1,0 +1,15 @@
+﻿@using SocialBlog.Core.Services.User.Models;
+
+@model AllUserViewModel
+
+@if (!Model.Users.Any())
+{
+	<h2 class="text-center">No Users found</h2>
+}
+
+<div class="row">
+	@foreach (var user in Model.Users)
+	{
+		<partial name="_UserPartial" model="@user" />
+	}
+</div>

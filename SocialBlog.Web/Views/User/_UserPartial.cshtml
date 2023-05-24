@@ -1,0 +1,19 @@
+﻿@using SocialBlog.Core.Services.User.Models;
+
+@model UserViewModel
+
+<div class="card mb-3" style="max-width: 1320px;">
+	<div class="row g-0">
+		<div class="col-md-8">
+			<div class="card-body">
+				<p style="display: inline-block; padding-right: 10px;" class="card-title"><strong>NickName:</strong> @Model.NickName</p>
+				<p style="display: inline-block; padding-right: 10px;" class="card-title"><strong>FirstName:</strong> @Model.FirstName</p>
+				<p style="display: inline-block; padding-right: 10px;" class="card-title"><strong>LastName:</strong> @Model.LastName</p>
+				@if (!Model.IsDeleted)
+				{
+					<a type="button" class="btn btn-danger" asp-controller="Author" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>					
+				}
+			</div>
+		</div>
+	</div>
+</div>

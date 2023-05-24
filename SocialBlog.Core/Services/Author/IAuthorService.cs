@@ -14,10 +14,12 @@ namespace SocialBlog.Core.Services.Author
 
 		Task ApproveAuthor(int id);
 
-		Task DeleteAuthor(int id);
+		Task Delete(int id);
 
 		Task ActivevateAuthor(int id);
 
 		Task<AllAuthorViewModel> GetAllAuthors();
+
+		Task Deactivate(int id);
 	}
 }

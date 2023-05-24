@@ -2,6 +2,8 @@
 {
 	using SocialBlog.Core.Data.Entities;
 	using SocialBlog.Core.Data.Common;
+	using SocialBlog.Core.Services.User.Models;
+	using Microsoft.EntityFrameworkCore;
 
 	public class UserService : IUserService
 	{
@@ -10,6 +12,24 @@
 		public UserService(IRepository repo)
 		{
 			this.repo = repo;
+		}
+
+		public async Task<AllUserViewModel> GetAllUsers()
+		{
+			AllUserViewModel model = new AllUserViewModel();
+			model.Users = await this.repo
+				.All<User>()
+				.Select(u => new UserViewModel()
+				{
+					Id = u.Id,
+					FirstName = u.FirstName,
+					LastName = u.LastName,
+					NickName = u.NickName,
+					IsDeleted = u.IsDeleted
+				})
+				.ToListAsync();
+
+			return model;
 		}
 
 		public async Task<string> GetNickNameById(string id)

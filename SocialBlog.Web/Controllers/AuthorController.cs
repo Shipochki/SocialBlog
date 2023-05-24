@@ -38,6 +38,11 @@ namespace SocialBlog.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> AllCandidate()
 		{
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
 			AllCandidateAuthorsViewModel model = await this.authorService.GetAllCandidate();
 			return View(model);
 		}
@@ -46,6 +51,11 @@ namespace SocialBlog.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Approve(int id)
 		{
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
 			await this.authorService.ApproveAuthor(id);
 
 			return View(nameof(AllCandidate));
@@ -55,7 +65,12 @@ namespace SocialBlog.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await this.authorService.DeleteAuthor(id);
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
+			await this.authorService.Delete(id);
 
 			return View(nameof(AllCandidate));
 		}
@@ -64,16 +79,42 @@ namespace SocialBlog.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Activate(int id)
 		{
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
 			await this.authorService.ActivevateAuthor(id);
 
 			return RedirectToAction("Index", "Home");
 		}
 
+		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> All()
 		{
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
 			AllAuthorViewModel model = await this.authorService.GetAllAuthors();
 
 			return View(model);
+		}
+
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> Deactivate(int id)
+		{
+			if (!this.User.IsAdmin())
+			{
+				return Unauthorized();
+			}
+
+			await this.authorService.Deactivate(id);
+
+			return View(nameof(All));
 		}
 	}
 }

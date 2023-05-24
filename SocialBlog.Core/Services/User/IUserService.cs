@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialBlog.Core.Services.User.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace SocialBlog.Core.Services.User
 		Task<string> GetNickNameById(string id);
 
 		Task<string> GetUserProfileImgById(string id);
+
+		Task<AllUserViewModel> GetAllUsers();
 	}
 }
