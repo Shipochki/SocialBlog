@@ -75,6 +75,11 @@
                 }
             }
 
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
             model.AuthorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
             int id = await this.postService.CreatePost(model);
 
@@ -88,6 +93,11 @@
         public async Task<IActionResult> Edit(int id)
         {
             EditPostViewModel post = await this.postService.GetEditPostById(id);
+
+            if(post == null)
+            {
+                return BadRequest();
+            }
 
             if (await this.authorService.GetAuthorIdByUserId(this.User.Id()) == -1)
             {
@@ -112,7 +122,12 @@
                 }
             }
 
-            await this.postService.EditPost(model);
+			if (!ModelState.IsValid)
+			{
+				return RedirectToAction(nameof(All));
+			}
+
+			await this.postService.EditPost(model);
 
             TempData["message"] = $"You have sucssessfuly edit a post '{model.Title}'!";
 
@@ -124,6 +139,12 @@
         public async Task<IActionResult> Delete(int id)
         {
             PostDeleteViewModel model = await this.postService.GetPostDeleteViweById(id);
+
+            if(model == null)
+            {
+                return BadRequest();
+            }
+
 			int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
 
 			if (model.AuthorId != authorId)
@@ -143,7 +164,7 @@
         {
 			int authorId = await this.authorService.GetAuthorIdByUserId(this.User.Id());
 
-			if (model.AuthorId != authorId)
+			if (model.AuthorId != authorId && !this.User.IsAdmin())
 			{
 				if (!this.User.IsAdmin())
 				{
