@@ -21,6 +21,8 @@
             : base(options) 
         {
             this.Database.Migrate();
+
+
         }
 
         public DbSet<Post> Posts { get; set; } = null!;
