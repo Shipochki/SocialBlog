@@ -41,6 +41,11 @@
                 return RedirectToAction("All", "Blog");
             }
 
+			if (!ModelState.IsValid)
+			{
+				return BadRequest();
+			}
+
             model.UserId = this.User.Id();
 			await this.authorService.CreateAuthor(model);
 

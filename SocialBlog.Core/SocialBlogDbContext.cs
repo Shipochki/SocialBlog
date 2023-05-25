@@ -20,10 +20,15 @@
 		public SocialBlogDbContext(DbContextOptions<SocialBlogDbContext> options)
             : base(options) 
         {
-            this.Database.Migrate();
-
-
-        }
+			if (this.Database.IsRelational())
+			{
+				this.Database.Migrate();
+			}
+			else
+			{
+				this.Database.EnsureCreated();
+			}
+		}
 
         public DbSet<Post> Posts { get; set; } = null!;
 
@@ -78,27 +83,27 @@
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            SeedData();
+            //SeedData();
 
-            builder
-                .Entity<User>()
-                .HasData(this.Admin);
+            //builder
+            //    .Entity<User>()
+            //    .HasData(this.Admin);
 
-            builder
-                .Entity<Author>()
-                .HasData(this.Author);
+            //builder
+            //    .Entity<Author>()
+            //    .HasData(this.Author);
 
-            builder
-                .Entity<Post>()
-                .HasData(this.Post1);
+            //builder
+            //    .Entity<Post>()
+            //    .HasData(this.Post1);
 
-            builder
-                .Entity<Post>()
-                .HasData(this.Post2);
+            //builder
+            //    .Entity<Post>()
+            //    .HasData(this.Post2);
 
-            builder
-                .Entity<Post>()
-                .HasData(this.Post3);
+            //builder
+            //    .Entity<Post>()
+            //    .HasData(this.Post3);
 
             base.OnModelCreating(builder);
         }

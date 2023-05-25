@@ -3,18 +3,18 @@
 	using SocialBlog.Core;
 	using SocialBlog.Core.Data.Common;
 	using SocialBlog.Core.Data.Entities;
-	//using SocialBlog.Tests.Mocks;
+	using SocialBlog.Tests.Mocks;
 
 	public class UnitTestBase
 	{
-		//protected IRepository data;
+		//protected SocialBlogDbContext data;
 
-		[OneTimeSetUp]
-		public async Task SetUpBase()
-		{
-			//this.data = new Repository(DatabaseMock.Instance);
-			//await SeedDatabase();
-		}
+		//[OneTimeSetUp]
+		//public  void SetUpBase()
+		//{
+		//	//this.data = DatabaseMock.Instance;
+		//	////await SeedDatabase();
+		//}
 
 		//public User User { get; private set; }
 
@@ -92,10 +92,10 @@
 		//	await this.data.SaveChangesAsync();
 		//}
 
-		[OneTimeTearDown]
-		public void TearDownBase()
-		{
-			//this.data.Dispose();
-		}
+		//[OneTimeTearDown]
+		//public void TearDownBase()
+		//{
+		//	this.data.Dispose();
+		//}
 	}
 }
