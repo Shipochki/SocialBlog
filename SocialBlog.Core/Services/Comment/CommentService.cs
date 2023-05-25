@@ -33,6 +33,11 @@
 		{
 			Comment comment = await this.repo.GetByIdAsync<Comment>(id);
 
+			if(comment == null)
+			{
+				throw new ArgumentException($"Comment with this id does not exist! Id: {id}");
+			}
+
 			comment.IsDeleted = true;
 
 			await this.repo.SaveChangesAsync();

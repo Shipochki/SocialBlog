@@ -18,6 +18,11 @@
 		{
 			Author author = await this.repo.GetByIdAsync<Author>(id);
 
+			if(author == null)
+			{
+				throw new ArgumentException($"Does not exist author with this id: {id}");
+			}
+
 			author.IsActive = true;
 
 			await this.repo.SaveChangesAsync();
@@ -27,6 +32,11 @@
 		{
 			Author author = await this.repo.GetByIdAsync<Author>(id);
 
+			if (author == null)
+			{
+				throw new ArgumentException($"Does not exist author with this id: {id}");
+			}
+
 			author.IsDeleted = true;
 
 			await this.repo.SaveChangesAsync();
@@ -35,6 +45,11 @@
 		public async Task ActivevateAuthor(int id)
 		{
 			Author author = await this.repo.GetByIdAsync<Author>(id);
+
+			if (author == null)
+			{
+				throw new ArgumentException($"Does not exist author with this id: {id}");
+			}
 
 			author.IsDeleted = false;
 
@@ -124,6 +139,12 @@
 		public async Task Deactivate(int id)
 		{
 			Author author = await this.repo.GetByIdAsync<Author>(id);
+
+			if (author == null)
+			{
+				throw new ArgumentException($"Does not exist author with this id: {id}");
+			}
+
 			author.IsActive = false;
 
 			await this.repo.SaveChangesAsync();

@@ -27,6 +27,11 @@
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateCommentViewModel model)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest();
+			}
+
 			model.UserId = this.User.Id();
 
 			int id = int.Parse(HttpContext.Request.Path.Value.ToString().Split('/').Last());
