@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialBlog.Tests.UnitTests
+﻿namespace SocialBlog.Tests.UnitTests
 {
-	internal class AuthorServiceTests
+	using SocialBlog.Core.Services.Author;
+
+	[TestFixture]
+	public class AuthorServiceTests : UnitTestBase
 	{
+		private IAuthorService authorService;
+
+		[OneTimeSetUp] 
+		public void SetUp() 
+		{
+			this.authorService = new AuthorService(this.data);
+		}
 	}
 }

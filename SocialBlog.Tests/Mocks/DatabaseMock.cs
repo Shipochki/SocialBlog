@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialBlog.Tests.Mocks
+﻿namespace SocialBlog.Tests.Mocks
 {
-	internal class DatabaseMock
+	using Microsoft.EntityFrameworkCore;
+	using SocialBlog.Core;
+	using SocialBlog.Core.Data.Common;
+
+	public static class DatabaseMock
 	{
+		public static SocialBlogDbContext Instance
+		{
+			get
+			{
+				var dbContextOptions = new DbContextOptionsBuilder<SocialBlogDbContext>()
+					.UseInMemoryDatabase("SocialBlogInMemoryDb"
+					+ DateTime.Now.Ticks.ToString())
+					.Options;
+
+				return new SocialBlogDbContext(dbContextOptions);
+			}
+		}
+
+		public static Repository Repo
+		{
+			get
+			{
+				return new Repository(Instance);
+			}
+		}
 	}
 }
