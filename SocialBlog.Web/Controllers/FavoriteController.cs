@@ -4,16 +4,19 @@
     using Microsoft.AspNetCore.Mvc;
     using SocialBlog.Core.Services.Favorite;
     using SocialBlog.Core.Services.Favorite.Models;
+    using SocialBlog.Core.Services.Post;
     using SocialBlog.Infranstructure;
     using SocialBlog.Web.Models.Favorite;
 
     public class FavoriteController : Controller
     {
         private readonly IFavoriteService favoriteService;
+        private readonly IPostService postService;
 
-        public FavoriteController(IFavoriteService favoriteService)
+        public FavoriteController(IFavoriteService favoriteService, IPostService postService)
         {
             this.favoriteService = favoriteService;
+            this.postService = postService;
         }
 
         [Authorize]
@@ -29,6 +32,11 @@
         [Authorize]
         public async Task<IActionResult> Create(int id)
         {
+            if(await this.postService.GetDetailsPostById(id) == null)
+            {
+                return BadRequest();
+            }
+
             CreateFavoriteViewModel model = new CreateFavoriteViewModel() 
             {
                 PostId = id,
