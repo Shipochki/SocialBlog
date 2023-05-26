@@ -35,12 +35,24 @@
 		public async Task<string> GetNickNameById(string id)
 		{
 			User user = await this.repo.GetByIdAsync<User>(id);
+
+			if(user == null)
+			{
+				throw new ArgumentException($"User with this id not exist! ID: {id}");
+			}
+
 			return user.NickName;
 		}
 
 		public async Task<string> GetUserProfileImgById(string id)
 		{
 			User user = await this.repo.GetByIdAsync<User>(id);
+
+			if (user == null)
+			{
+				throw new ArgumentException($"User with this id not exist! ID: {id}");
+			}
+
 			return user.ProfileImgLink != null ? user.ProfileImgLink : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 		}
 	}

@@ -1,7 +1,6 @@
 ﻿namespace SocialBlog.Tests.UnitTests
 {
 	using Microsoft.EntityFrameworkCore;
-	using SocialBlog.Core.Services.Comment;
 	using SocialBlog.Core;
 	using SocialBlog.Core.Data.Entities;
 	using SocialBlog.Core.Data.Common;
@@ -256,6 +255,138 @@
 			Favorite result = await repo.GetByIdAsync<Favorite>(1);
 
 			Assert.IsNull(result);
+		}
+
+		[Test]
+		public async Task GetTopThreeFavoritePostsIds_ShouldReturnCollectionOfIds()
+		{
+			var contextOptions = new DbContextOptionsBuilder<SocialBlogDbContext>()
+				.UseInMemoryDatabase("SocialBlogDb")
+				.Options;
+
+			var context = new SocialBlogDbContext(contextOptions);
+
+			context.Database.EnsureDeleted();
+			context.Database.EnsureCreated();
+
+			List<User> users = new List<User>()
+			{
+				new User
+				{
+					Id = "1",
+					FirstName = "Nikola",
+					LastName = "Petrov",
+					NickName = "Niki1234"
+				},
+				new User
+				{
+					Id = "2",
+					FirstName = "Nikola2",
+					LastName = "Petrov2",
+					NickName = "Niki12342"
+				}
+				,
+				new User
+				{
+					Id = "3",
+					FirstName = "Nikola3",
+					LastName = "Petrov3",
+					NickName = "Niki124542"
+				}
+			};
+
+			Author author = new Author
+			{
+				Id = 1,
+				UserId = "1",
+				PhoneNumber = "525252353",
+			};
+
+			List<Post> posts = new List<Post>()
+			{
+				new Post
+				{
+					Id = 1,
+					Title = "Title",
+					Description = "Description",
+					Text = "Text",
+					Tag = "Tag",
+					ImageUrlLink = "ImageUrlLink",
+					TimeForRead = 4,
+					AuthorId = 1,
+				},
+				new Post
+				{
+					Id = 2,
+					Title = "Title2",
+					Description = "Description2",
+					Text = "Text2",
+					Tag = "Tag2",
+					ImageUrlLink = "ImageUrlLink2",
+					TimeForRead = 6,
+					AuthorId = 1,
+				},
+				new Post
+				{
+					Id = 3,
+					Title = "Title3",
+					Description = "Description3",
+					Text = "Text3",
+					Tag = "Tag3",
+					ImageUrlLink = "ImageUrlLink3",
+					TimeForRead = 7,
+					AuthorId = 1,
+				}
+			};
+
+			List<Favorite> favorites = new List<Favorite>
+			{
+				new Favorite {
+					Id = 1,
+					PostId = 1,
+					UserId = "1"
+				},
+				new Favorite {
+					Id = 2,
+					PostId = 1,
+					UserId = "2"
+				},
+				new Favorite {
+					Id = 3,
+					PostId = 1,
+					UserId = "3"
+				},
+				new Favorite {
+					Id = 4,
+					PostId = 2,
+					UserId = "1"
+				},
+				new Favorite {
+					Id = 5,
+					PostId = 3,
+					UserId = "2"
+				},
+				new Favorite {
+					Id = 6,
+					PostId = 3,
+					UserId = "2"
+				}
+			};
+
+			var repo = new Repository(context);
+			var favoriteService = new FavoriteService(repo);
+
+			await repo.AddRangeAsync(users);
+			await repo.AddAsync(author);
+			await repo.AddRangeAsync(posts);
+			await repo.AddRangeAsync(favorites);
+			await repo.SaveChangesAsync();
+
+			List<int> result = await favoriteService.GetTopThreeFavoritePostsIds();
+
+			Assert.That(result[0].Equals(1));
+			Assert.That(result[1].Equals(3));
+			Assert.That(result[2].Equals(2));
 		}
 	}
 }

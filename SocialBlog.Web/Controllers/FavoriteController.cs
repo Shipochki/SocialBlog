@@ -32,11 +32,6 @@
         [Authorize]
         public async Task<IActionResult> Create(int id)
         {
-            if(await this.postService.GetDetailsPostById(id) == null)
-            {
-                return BadRequest();
-            }
-
             CreateFavoriteViewModel model = new CreateFavoriteViewModel() 
             {
                 PostId = id,
